@@ -4,12 +4,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-//import { ChainFactory, ChainType } from '../../../index'
-//import { ChainEndpoint, ChainActionType, ValueTransferParams } from '../../../models'
+// import { ChainFactory, ChainType } from '../../../index'
+// import { ChainEndpoint, ChainActionType, ValueTransferParams } from '../../../models'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 import { AlgorandAddress, AlgorandMultisigOptions, AlgorandUnit, AlgorandValue } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
-//import { toChainEntityName } from '../../../helpers'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
+// import { toChainEntityName } from '../../../helpers'
 
 
 

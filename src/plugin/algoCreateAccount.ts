@@ -1,6 +1,7 @@
 // import { throwNewError } from '../../errors'
 // import { CreateAccount } from '../../interfaces'
 // import { isNullOrEmpty, notSupported } from '../../helpers'
+import { Helpers, Errors, Interfaces } from '@open-rights-exchange/chainjs'
 import {
   AlgorandCreateAccountOptions,
   AlgorandEntityName,
@@ -16,8 +17,6 @@ import {
   toAddressFromPublicKey,
   toAlgorandEntityName,
 } from './helpers'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
 
 /** Helper class to compose a transction for creating a new chain account
  *  Handles native accounts
@@ -121,7 +120,11 @@ export class AlgorandCreateAccount implements Interfaces.CreateAccount {
    * Recycling is not supported for now. Will be supported in the future.
    */
   async determineNewAccountName(accountName: AlgorandEntityName): Promise<any> {
-    return { alreadyExists: false, newAccountName: accountName, canRecycle: false }
+    return {
+      alreadyExists: false,
+      newAccountName: accountName,
+      canRecycle: false,
+    }
   }
 
   /** Returns the Algorand Address as AlgorandEntityName for the public key provided in options -

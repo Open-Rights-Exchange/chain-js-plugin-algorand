@@ -4,7 +4,7 @@
 // import { ChainError } from '../../errors'
 // import { stringifySafe } from '../../helpers'
 // import { ChainErrorType } from '../../models'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
+import { Models, Helpers, Errors } from '@open-rights-exchange/chainjs'
 
 /**  subset of errors from EOS chain - https://github.com/EOSIO/eos/blob/master/libraries/chain/include/eosio/chain/exceptions.hpp
  * IMPORTANT: These are in order of importance
@@ -39,7 +39,7 @@ export const ChainErrorRegExs: { [key: string]: string } = {
 
 /**  Maps an Error object (thrown by a call to the chain) into a known set of errors
  *   RpcError is an eosjs structure that includes the 'json' property that has error details */
-//export function mapChainError(error: RpcError | Error): ChainError {
+// export function mapChainError(error: RpcError | Error): ChainError {
 export function mapChainError(error: Error): Errors.ChainError {
   let errorSearchString
   let errorMessage

@@ -1,13 +1,13 @@
 // How to use fetch mocks - https://www.npmjs.com/package/jest-fetch-mock
 
-//import { jsonParseAndRevive, toChainEntityName } from '../../../helpers'
-//import { ChainFactory, ChainType } from '../../..'
+// import { jsonParseAndRevive, toChainEntityName } from '../../../helpers'
+// import { ChainFactory, ChainType } from '../../..'
+import { Models, PluginChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 import { multisigChainSerialized } from './mockups/multisig'
-//import { ChainActionType, ValueTransferParams } from '../../../models'
+// import { ChainActionType, ValueTransferParams } from '../../../models'
 import { determineMultiSigAddress, toAlgorandPrivateKey } from '../helpers'
 import { AlgorandTransaction } from '../algoTransaction'
 import { AlgorandMultisigOptions, AlgorandTransactionOptions } from '../models'
-import { Models, PluginChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 import Plugin from '../ChainAlgorandV1'
 
 const childAcct1 = 'E4437CMRLC234HAGT4SRYTISZF3XQGZUT33Q27UDW7CDDYLXIXGD4UR7YA'
@@ -35,7 +35,7 @@ describe('Test Algorand Multisig Transactions', () => {
       },
     },
   ]
-  const algoTest = PluginChainFactory([Plugin],Models.ChainType.AlgorandV1, algoTestnetEndpoints)
+  const algoTest = PluginChainFactory([Plugin], Models.ChainType.AlgorandV1, algoTestnetEndpoints)
 
   it('setFromRaw() using chain serialized', async () => {
     await algoTest.connect()

@@ -1,9 +1,8 @@
 import { Algodv2, Indexer } from 'algosdk'
-//import { ChainSettingsCommunicationSettings, ChainSymbolBrand, ModelsCryptoEd25519 } from '../../../models'
+// import { ChainSettingsCommunicationSettings, ChainSymbolBrand, ModelsCryptoEd25519 } from '../../../models'
+import { Models } from '@open-rights-exchange/chainjs'
 import { AlgorandAddress, AlgorandKeyPair } from './cryptoModels'
 import { AlgorandChainTransactionParamsStruct } from './algoStructures'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
 
 export type AlgoClient = Algodv2
 export type AlgoClientIndexer = Indexer

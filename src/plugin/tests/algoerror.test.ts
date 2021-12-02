@@ -2,25 +2,24 @@
 // How to use fetch mocks - https://www.npmjs.com/package/jest-fetch-mock
 // TODO: refactor fect mock to not use eosjs module
 
-//import { JsonRpc } from 'eosjs' // No idea why we need eosjs in an Algo test?
+// import { JsonRpc } from 'eosjs' // No idea why we need eosjs in an Algo test?
 
-import { mapChainError } from '../algoErrors'
-//import { ChainErrorType } from '../../../models'
-import { Models, Errors } from '@open-rights-exchange/chainjs'
+// import { Models, Errors } from '@open-rights-exchange/chainjs'
+// import { mapChainError } from '../algoErrors'
+// import { ChainErrorType } from '../../../models'
 
 describe('Error mapping', () => {
-  const endpoint = 'http://localhost'
+  // const endpoint = 'http://localhost'
   const fetchMock = fetch as any
-  //let jsonRpc: JsonRpc
+  // let jsonRpc: JsonRpc
 
   beforeEach(() => {
     fetchMock.resetMocks()
-    //jsonRpc = new JsonRpc(endpoint)
+    // jsonRpc = new JsonRpc(endpoint)
   })
 
-
   it('Just a dummy test', async () => {
-    //Just a dummy to pass 
+    // Just a dummy to pass
     expect(true).toEqual(true)
   })
 

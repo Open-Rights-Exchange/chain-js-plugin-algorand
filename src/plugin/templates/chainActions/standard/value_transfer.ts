@@ -1,4 +1,5 @@
-//import { ActionDecomposeReturn, ChainActionType, ValueTransferParams } from '../../../../../models'
+// import { ActionDecomposeReturn, ChainActionType, ValueTransferParams } from '../../../../../models'
+import { Models } from '@open-rights-exchange/chainjs'
 import {
   AlgorandActionPaymentParams,
   AlgorandUnit,
@@ -12,8 +13,6 @@ import {
   composeAction as algoPaymentComposeAction,
   decomposeAction as algoPaymentDecomposeAction,
 } from '../chainSpecific/payment'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
 
 export const composeAction = (params: Models.ValueTransferParams, suggestedParams: AlgorandSuggestedParams): any => {
   const { amount: amountString, symbol = DEFAULT_ALGO_UNIT } = params

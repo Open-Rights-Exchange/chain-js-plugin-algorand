@@ -1,15 +1,16 @@
 import * as nacl from 'tweetnacl'
-//import { IndexedObject } from '../../models'
+// import { IndexedObject } from '../../models'
+import { Models } from '@open-rights-exchange/chainjs'
 import { AlgorandUnit } from './models'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
 
 export const ALGORAND_ADDRESS_LENGTH = 58
 export const ALGORAND_ADDRESS_BYTES_ONLY_LENGTH = 36
 export const ALGORAND_CHECKSUM_BYTE_LENGTH = 4
 export const PUBLIC_KEY_LENGTH = nacl.sign.publicKeyLength
 export const ALGORAND_EMPTY_CONTRACT_NAME = 'none'
-export const ALGORAND_POST_CONTENT_TYPE = { 'content-type': 'application/x-binary' }
+export const ALGORAND_POST_CONTENT_TYPE = {
+  'content-type': 'application/x-binary',
+}
 /** Default number of rounds before transaction expires */
 export const ALGORAND_DEFAULT_TRANSACTION_VALID_BLOCKS = 1000
 export const DEFAULT_TIMEOUT_FOR_TRX_CONFIRM = 500

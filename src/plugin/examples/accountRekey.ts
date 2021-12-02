@@ -5,11 +5,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 
-//import { ChainFactory, ChainType } from '../../../index'
-//import { ChainEndpoint, ChainActionType, TokenTransferParams } from '../../../models'
+// import { ChainFactory, ChainType } from '../../../index'
+// import { ChainEndpoint, ChainActionType, TokenTransferParams } from '../../../models'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 import { AlgorandActionAssetTransferParams, AlgorandChainActionType, AlgorandActionPaymentParams, AlgorandTransactionOptions } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 
 
 require('dotenv').config()

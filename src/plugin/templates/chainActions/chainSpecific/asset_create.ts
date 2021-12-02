@@ -1,5 +1,6 @@
 import * as algosdk from 'algosdk'
-//import { isNullOrEmpty } from '../../../../../helpers'
+// import { isNullOrEmpty } from '../../../../../helpers'
+import { Helpers } from '@open-rights-exchange/chainjs'
 import {
   AlgorandDecomposeReturn,
   AlgorandChainActionType,
@@ -11,8 +12,6 @@ import {
   AlgorandTxActionSdkEncoded,
 } from '../../../models'
 import { AlgorandActionHelper } from '../../../algoAction'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
 
 /**
  * Composes asset create action */
@@ -66,7 +65,10 @@ export const decomposeAction = (
   const actionHelper = new AlgorandActionHelper(action)
   const actionParams = actionHelper.paramsOnly
   // Cant identify using only type (more than one action uses AssetConfig type) - must check params too
-  if (actionParams?.type === AlgorandTransactionTypeCode.AssetConfig && !Helpers.isNullOrEmpty(actionParams?.assetName)) {
+  if (
+    actionParams?.type === AlgorandTransactionTypeCode.AssetConfig &&
+    !Helpers.isNullOrEmpty(actionParams?.assetName)
+  ) {
     const returnData = {
       ...actionParams,
     }

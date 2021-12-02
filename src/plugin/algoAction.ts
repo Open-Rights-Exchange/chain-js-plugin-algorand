@@ -1,23 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import * as algosdk from 'algosdk'
 import { Transaction as AlgoTransactionClass } from 'algosdk'
-// import {
-//   bigIntToUint8Array,
-//   bufferToString,
-//   byteArrayToHexString,
-//   hasHexPrefix,
-//   hexStringToByteArray,
-//   isANumber,
-//   isAString,
-//   isAUint8Array,
-//   isBase64EncodedAndNotUtf,
-//   isHexString,
-//   isNullOrEmpty,
-//   jsonParseAndRevive,
-//   removeHexPrefix,
-//   toBuffer,
-// } from '../../helpers'
-//import { throwNewError } from '../../errors'
+import { Helpers, Errors } from '@open-rights-exchange/chainjs'
 import {
   AlgorandTransactionOptions,
   AlgorandTxAction,
@@ -39,7 +23,6 @@ import {
   MINIMUM_TRANSACTION_FEE_FALLBACK,
 } from './algoConstants'
 import { toAlgorandAddressFromRawStruct, toRawAddressFromAlgoAddr } from './helpers'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
 
 /** Helper class to ensure transaction actions properties are set correctly
  * Algorand supports these actions:
@@ -161,7 +144,9 @@ export class AlgorandActionHelper {
       to: toRawAddressFromAlgoAddr(action.to) || undefined,
       from: toRawAddressFromAlgoAddr(action.from) || undefined,
       closeRemainderTo: toRawAddressFromAlgoAddr(action.closeRemainderTo) || undefined,
-      appAccounts: !Helpers.isNullOrEmpty(action.appAccounts) ? action.appAccounts.map(toRawAddressFromAlgoAddr) : undefined,
+      appAccounts: !Helpers.isNullOrEmpty(action.appAccounts)
+        ? action.appAccounts.map(toRawAddressFromAlgoAddr)
+        : undefined,
       assetManager: toRawAddressFromAlgoAddr(action.assetManager) || undefined,
       assetReserve: toRawAddressFromAlgoAddr(action.assetReserve) || undefined,
       assetFreeze: toRawAddressFromAlgoAddr(action.assetFreeze) || undefined,
@@ -265,7 +250,8 @@ export class AlgorandActionHelper {
     if (!Helpers.isNullOrEmpty(group) && !Buffer.isBuffer(group)) params.group = Helpers.toBuffer(group)
     if (!Helpers.isNullOrEmpty(lease) && !Helpers.isAUint8Array(lease)) params.lease = algosdk.encodeObj(lease)
     if (!Helpers.isNullOrEmpty(note) && !Helpers.isAUint8Array(note)) params.note = algosdk.encodeObj(note)
-    if (!Helpers.isNullOrEmpty(selectionKey) && !Buffer.isBuffer(selectionKey)) params.selectionKey = Helpers.toBuffer(selectionKey)
+    if (!Helpers.isNullOrEmpty(selectionKey) && !Buffer.isBuffer(selectionKey))
+      params.selectionKey = Helpers.toBuffer(selectionKey)
     if (!Helpers.isNullOrEmpty(tag) && !Buffer.isBuffer(tag)) params.tag = Helpers.toBuffer(tag)
     if (!Helpers.isNullOrEmpty(voteKey) && !Buffer.isBuffer(voteKey)) params.voteKey = Helpers.toBuffer(voteKey)
     return params
@@ -346,7 +332,8 @@ export class AlgorandActionHelper {
     if (!appArgs) return []
     const appArgsEncoded = appArgs.map((appArg: string | number | Uint8Array) => {
       if (Helpers.isAUint8Array(appArg)) return appArg as Uint8Array
-      if (Helpers.hasHexPrefix(appArg)) return new Uint8Array(Buffer.from(Helpers.removeHexPrefix(appArg as string), 'hex'))
+      if (Helpers.hasHexPrefix(appArg))
+        return new Uint8Array(Buffer.from(Helpers.removeHexPrefix(appArg as string), 'hex'))
       if (Helpers.isBase64EncodedAndNotUtf(appArg)) return new Uint8Array(Buffer.from(appArg as string, 'base64'))
       if (Helpers.isAString(appArg)) return new Uint8Array(Buffer.from(appArg as string, 'utf8'))
       if (Helpers.isANumber(appArg)) return Helpers.bigIntToUint8Array(appArg as number) // TODO: Confirm this is the right conversion - can we use an existing function for this?

@@ -6,13 +6,13 @@
 /* eslint-disable no-console */
 
 import * as algosdk from 'algosdk'
-//import { ChainFactory, ChainType } from '../../../index'
-//import { ChainEndpoint, ChainActionType, TokenTransferParams, ValueTransferParams } from '../../../models'
+// import { ChainFactory, ChainType } from '../../../index'
+// import { ChainEndpoint, ChainActionType, TokenTransferParams, ValueTransferParams } from '../../../models'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 import { AlgorandActionAssetTransferParams, AlgorandChainActionType, AlgorandActionPaymentParams, AlgorandTransactionOptions } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
-//import { toChainEntityName } from '../../../helpers'
+// import { toChainEntityName } from '../../../helpers'
 import { AlgorandActionHelper } from '../algoAction'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 
 
 require('dotenv').config()

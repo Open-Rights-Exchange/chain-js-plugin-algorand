@@ -1,7 +1,4 @@
-//import { assertPluginTypeNotAlreadyInstalled, initializePlugin, notImplemented, notSupported } from '../../helpers'
-//import { ChainType, ChainActionType, ChainEntityName, CryptoCurve, TransactionStatus } from '../../models'
-//import { throwNewError } from '../../errors'
-//import { Chain } from '../../interfaces'
+import { Models, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
 import {
   AlgorandAddress,
   AlgorandChainActionType,
@@ -37,10 +34,8 @@ import {
   toAlgorandPublicKey,
   toAlgorandSignature,
 } from './helpers'
-//import { Asymmetric } from '../../crypto'
-//import { ChainJsPlugin, ChainJsPluginOptions } from '../../interfaces/plugin'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
+// import { Asymmetric } from '../../crypto'
+// import { ChainJsPlugin, ChainJsPluginOptions } from '../../interfaces/plugin'
 
 class Plugin implements Chain {
   private _endpoints: AlgorandChainEndpoint[]
@@ -88,7 +83,10 @@ class Plugin implements Chain {
   }
 
   /** Compose an object for a chain contract action */
-  public composeAction = async (actionType: Models.ChainActionType | AlgorandChainActionType, args: any): Promise<any> => {
+  public composeAction = async (
+    actionType: Models.ChainActionType | AlgorandChainActionType,
+    args: any,
+  ): Promise<any> => {
     return composeAction(this._chainState, actionType, args)
   }
 
@@ -140,7 +138,9 @@ class Plugin implements Chain {
    * A transaction that has enough fees will appear on the chain and quickly be confirmed
    * Until the transaction is processed by the chain, this function will throw a TxNotFoundOnChain chain error
    */
-  public async fetchTransaction(transactionId: string): Promise<{ status: Models.TransactionStatus; transaction: any }> {
+  public async fetchTransaction(
+    transactionId: string,
+  ): Promise<{ status: Models.TransactionStatus; transaction: any }> {
     return this._chainState.fetchTransaction(transactionId)
   }
 
@@ -262,7 +262,7 @@ class Plugin implements Chain {
     return Models.ChainType.AlgorandV1
   }
 
-  public static chainType : Models.ChainType = Models.ChainType.AlgorandV1;
+  public static chainType: Models.ChainType = Models.ChainType.AlgorandV1
 
   /** Returns chain plug-in name */
   // eslint-disable-next-line class-methods-use-this

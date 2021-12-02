@@ -1,5 +1,4 @@
-//import { notSupported } from '../../helpers'
-//import { ChainActionType } from '../../models'
+import { Models, Helpers } from '@open-rights-exchange/chainjs'
 import { composeAction as TokenTransferTemplate } from './templates/chainActions/standard/token_transfer'
 import { composeAction as ValueTransferTemplate } from './templates/chainActions/standard/value_transfer'
 import { composeAction as ApplicationClearTemplate } from './templates/chainActions/chainSpecific/application_clear'
@@ -16,7 +15,6 @@ import { composeAction as AssetFreezeTemplate } from './templates/chainActions/c
 import { composeAction as AssetTransferTemplate } from './templates/chainActions/chainSpecific/asset_transfer'
 import { composeAction as KeyRegistrationTemplate } from './templates/chainActions/chainSpecific/key_registration'
 import { composeAction as PaymentTemplate } from './templates/chainActions/chainSpecific/payment'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
 
 import {
   AlgorandChainActionType,
@@ -31,7 +29,9 @@ import { AlgorandActionHelper } from './algoAction'
 import { compileIfSourceCodeIfNeeded } from './helpers'
 
 // map a key name to a function that returns an object
-const ComposeAction: { [key: string]: (args: any, suggestedParams: AlgorandTxHeaderParams) => any } = {
+const ComposeAction: {
+  [key: string]: (args: any, suggestedParams: AlgorandTxHeaderParams) => any
+} = {
   // Standard actions
   TokenTransfer: TokenTransferTemplate,
   ValueTransfer: ValueTransferTemplate,

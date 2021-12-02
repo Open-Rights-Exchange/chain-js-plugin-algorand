@@ -4,10 +4,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-//import { ChainFactory, ChainType } from '../../../index'
-//import { ChainEndpoint } from '../../../models'
-import { toAlgorandPrivateKey, toAlgorandPublicKey } from '../helpers'
+// import { ChainFactory, ChainType } from '../../../index'
+// import { ChainEndpoint } from '../../../models'
 import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
+import { toAlgorandPrivateKey, toAlgorandPublicKey } from '../helpers'
 
 
 require('dotenv').config()

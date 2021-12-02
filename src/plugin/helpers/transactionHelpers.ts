@@ -1,6 +1,7 @@
 import * as algosdk from 'algosdk'
 import { TextEncoder } from 'util'
-//import { byteArrayToHexString, isAUint8Array, isHexString, isNullOrEmpty } from '../../../helpers'
+// import { byteArrayToHexString, isAUint8Array, isHexString, isNullOrEmpty } from '../../../helpers'
+import { Helpers } from '@open-rights-exchange/chainjs'
 import {
   AlgoClient,
   AlgorandMultisigAccount,
@@ -9,8 +10,6 @@ import {
   AlgorandRawTransactionStruct,
   AlgorandTxSignResults,
 } from '../models'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
 
 /** Calculates the multisig address using the multisig options including version, threshhold and addresses */
 export function determineMultiSigAddress(options: AlgorandMultisigOptions): AlgorandMultisigAccount {

@@ -1,20 +1,5 @@
 import algosdk from 'algosdk'
-// import {
-//   ChainError,
-//   rejectAwaitTransaction,
-//   resolveAwaitTransaction,
-//   throwAndLogError,
-//   throwNewError,
-// } from '../../errors'
-// import { ChainState } from '../../interfaces/chainState'
-// import {
-//   ChainErrorDetailCode,
-//   ChainErrorType,
-//   ChainInfo,
-//   ChainSettingsCommunicationSettings,
-//   ConfirmType,
-//   TransactionStatus,
-// } from '../../models'
+import { Models, Helpers, Errors, Interfaces } from '@open-rights-exchange/chainjs'
 import {
   AlgorandAddress,
   AlgoClient,
@@ -29,7 +14,6 @@ import {
   AlgorandTxResult,
   AlgorandUnit,
 } from './models'
-// import { getHeaderValueFromEndpoint, hexStringToByteArray, isNullOrEmpty, trimTrailingChars } from '../../helpers'
 import {
   ALGORAND_POST_CONTENT_TYPE,
   DEFAULT_BLOCKS_TO_CHECK,
@@ -40,8 +24,6 @@ import {
 } from './algoConstants'
 import { toAlgo } from './helpers'
 import { mapChainError } from './algoErrors'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
 
 export class AlgorandChainState implements Interfaces.ChainState {
   private _activeEndpoint: AlgorandChainEndpoint
@@ -506,7 +488,9 @@ export class AlgorandChainState implements Interfaces.ChainState {
    * A transction that has enough fees will appear on the chain and quickly be confirmed
    * Until the transaction is processed by the chain, this function will throw a TxNotFoundOnChain chain error
    */
-  public async fetchTransaction(transactionId: string): Promise<{ status: Models.TransactionStatus; transaction: any }> {
+  public async fetchTransaction(
+    transactionId: string,
+  ): Promise<{ status: Models.TransactionStatus; transaction: any }> {
     const transactionResponse = await this.getTransactionById(transactionId)
     // TODO: Type the transaction response - which wraps this unfinished type: AlgorandTxFromChain
     const { 'confirmed-round': confirmedRound, 'last-valid': lastValid } = transactionResponse.transaction

@@ -2,10 +2,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as algosdk from 'algosdk'
 import { Transaction as AlgoTransactionClass, TransactionLike } from 'algosdk'
-//import { Transaction } from '../../interfaces'
-//import { ChainErrorType, ChainSettingsCommunicationSettings, ConfirmType, TxExecutionPriority } from '../../models'
+// import { Transaction } from '../../interfaces'
+// import { ChainErrorType, ChainSettingsCommunicationSettings, ConfirmType, TxExecutionPriority } from '../../models'
+import {
+  Models,
+  ChainFactory,
+  Helpers,
+  Chain,
+  ChainJsPlugin,
+  Crypto,
+  Errors,
+  Interfaces,
+} from '@open-rights-exchange/chainjs'
 import { mapChainError } from './algoErrors'
-//import { throwNewError } from '../../errors'
+// import { throwNewError } from '../../errors'
 // import {
 //   byteArrayToHexString,
 //   hexStringToByteArray,
@@ -61,8 +71,6 @@ import {
   verifySignedWithPublicKey as verifySignatureForDataAndPublicKey,
 } from './algoCrypto'
 import { MINIMUM_TRANSACTION_FEE_FALLBACK, TRANSACTION_FEE_PRIORITY_MULTIPLIERS } from './algoConstants'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
 
 export class AlgorandTransaction implements Interfaces.Transaction {
   private _actionHelper: AlgorandActionHelper
@@ -97,7 +105,9 @@ export class AlgorandTransaction implements Interfaces.Transaction {
 
   /** Returns a parent transaction - not used for Algorand */
   get parentTransaction() {
-    return Helpers.notSupported('Algorand doesnt use parent transaction- check requiresParentTransaction() before calling this')
+    return Helpers.notSupported(
+      'Algorand doesnt use parent transaction- check requiresParentTransaction() before calling this',
+    )
   }
 
   /** Whether parent transaction has been set yet - not used for Algorand */
@@ -195,10 +205,15 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   ): Promise<void> {
     this.assertIsConnected()
     this.assertNoSignatures()
-    const decodedTransaction = Helpers.isAUint8Array(transaction) ? (algosdk.decodeObj(transaction as any) as any) : transaction
+    const decodedTransaction = Helpers.isAUint8Array(transaction)
+      ? (algosdk.decodeObj(transaction as any) as any)
+      : transaction
     // if we have a txn property, then we have a 'raw' tx value, so set raw props
     if (decodedTransaction?.txn) {
-      this.setRawTransactionFromSignResults({ txID: null, blob: algosdk.encodeObj(decodedTransaction) })
+      this.setRawTransactionFromSignResults({
+        txID: null,
+        blob: algosdk.encodeObj(decodedTransaction),
+      })
     }
     // actions setter can handle any flavor of transaction
     this.actions = [decodedTransaction]
@@ -496,7 +511,9 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   /** Determine standard multisig options from raw msig struct */
   private multisigOptionsFromRawTransactionMultisig(msig: AlgorandMultiSignatureMsigStruct): AlgorandMultisigOptions {
     if (Helpers.isNullOrEmpty(msig)) return null
-    const addrs = msig.subsig.map(sig => toAddressFromPublicKey(toAlgorandPublicKey(Helpers.byteArrayToHexString(sig.pk))))
+    const addrs = msig.subsig.map(sig =>
+      toAddressFromPublicKey(toAlgorandPublicKey(Helpers.byteArrayToHexString(sig.pk))),
+    )
     return {
       version: msig.v,
       threshold: msig.thr,
@@ -630,7 +647,13 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     expireSeconds = expireSeconds ?? defaultTransactionSettings?.expireSeconds
     fee = fee ?? defaultTransactionSettings?.fee
     flatFee = flatFee ?? defaultTransactionSettings?.flatFee
-    this._options = { expireSeconds, fee, flatFee, multisigOptions, signerPublicKey }
+    this._options = {
+      expireSeconds,
+      fee,
+      flatFee,
+      multisigOptions,
+      signerPublicKey,
+    }
   }
 
   /** Throws if not yet connected to chain - via chain.connect() */
@@ -682,7 +705,11 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   private isValidTxSignatureForPublicKey(signature: AlgorandSignature, publicKey: AlgorandPublicKey): boolean {
     if (!this.rawTransaction) return false
     const transactionBytesToSign = this.signBuffer // uses Algo SDK Transaction object
-    return verifySignatureForDataAndPublicKey(Helpers.byteArrayToHexString(transactionBytesToSign), publicKey, signature)
+    return verifySignatureForDataAndPublicKey(
+      Helpers.byteArrayToHexString(transactionBytesToSign),
+      publicKey,
+      signature,
+    )
   }
 
   /** extract 'from' address from various action types and confirm it matches multisig options */
@@ -736,7 +763,12 @@ export class AlgorandTransaction implements Interfaces.Transaction {
 
   /** JSON representation of transaction data */
   public toJson(): any {
-    return { header: this.header, actions: this.actions, raw: this.raw, signatures: this.signatures }
+    return {
+      header: this.header,
+      actions: this.actions,
+      raw: this.raw,
+      signatures: this.signatures,
+    }
   }
 
   public get supportsCancel() {
@@ -759,7 +791,11 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   public async setDesiredFee(desiredFee: string) {
     this.assertHasAction()
     const fee = algoToMicro(desiredFee)
-    const trx: AlgorandTxAction = { ...this._actionHelper.action, fee, flatFee: true }
+    const trx: AlgorandTxAction = {
+      ...this._actionHelper.action,
+      fee,
+      flatFee: true,
+    }
     this.actions = [trx]
   }
 

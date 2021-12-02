@@ -2,12 +2,20 @@
 // import { notImplemented } from '../../helpers'
 // import { Account } from '../../interfaces'
 // import { throwNewError } from '../../errors'
+import {
+  Models,
+  ChainFactory,
+  Helpers,
+  Chain,
+  ChainJsPlugin,
+  Crypto,
+  Errors,
+  Interfaces,
+} from '@open-rights-exchange/chainjs'
 import { AlgorandAccountStruct, AlgorandAddress, AlgorandPublicKey } from './models'
 import { AlgorandChainState } from './algoChainState'
 import { toAddressFromPublicKey } from './helpers/cryptoModelHelpers'
 import { isValidAlgorandAddress, isValidAlgorandPublicKey } from './helpers'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
 
 export class AlgorandAccount implements Interfaces.Account {
   private _account: AlgorandAccountStruct

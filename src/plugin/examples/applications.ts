@@ -6,8 +6,9 @@
 
 import fs from 'fs'
 import * as algosdk from 'algosdk'
-//import { ChainFactory, ChainType } from '../../../index'
-//import { ChainActionType, ChainEndpoint, ConfirmType, TokenTransferParams } from '../../../models'
+// import { ChainFactory, ChainType } from '../../../index'
+// import { ChainActionType, ChainEndpoint, ConfirmType, TokenTransferParams } from '../../../models'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 import {
   AlgorandActionAppCreateParams,
   AlgorandActionAppMultiPurposeParams,
@@ -15,10 +16,9 @@ import {
   AlgorandChainActionType,
 } from '../models'
 import { toAlgorandPrivateKey, toAlgorandSymbol } from '../helpers'
-//import { toChainEntityName } from '../../../helpers'
+// import { toChainEntityName } from '../../../helpers'
 import ChainAlgorandV1  from '../ChainAlgorandV1'
 import { composedAppCreate } from '../tests/mockups/composedActions'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 
 
 

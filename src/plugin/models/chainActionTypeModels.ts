@@ -1,7 +1,6 @@
+import { Models } from '@open-rights-exchange/chainjs'
 import { AlgorandAddress } from './cryptoModels'
-//import { ChainActionType } from '../../../models'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
-
+// import { ChainActionType } from '../../../models'
 
 /** ChainJS action type names */
 export enum AlgorandChainActionType {

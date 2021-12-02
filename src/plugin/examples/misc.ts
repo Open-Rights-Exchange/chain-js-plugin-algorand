@@ -4,12 +4,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-//import { sleep, toChainEntityName } from '../../../helpers'
-//import { ChainError, ChainFactory, ChainType } from '../../../index'
+// import { sleep, toChainEntityName } from '../../../helpers'
+// import { ChainError, ChainFactory, ChainType } from '../../../index'
+import { Models, ChainFactory, Helpers, Errors } from '@open-rights-exchange/chainjs'
 import { toAlgorandSymbol } from '../helpers'
 import { decryptWithPassword, encryptWithPassword } from '../algoCrypto'
 import ChainAlgorandV1 from '../ChainAlgorandV1'
-import { Models, ChainFactory, Helpers, Errors } from '@open-rights-exchange/chainjs'
 
 
 require('dotenv').config()

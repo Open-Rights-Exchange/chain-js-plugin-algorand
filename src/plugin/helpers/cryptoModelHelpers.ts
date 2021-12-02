@@ -1,24 +1,14 @@
 import * as base32 from 'hi-base32'
 import * as nacl from 'tweetnacl'
 import * as sha512 from 'js-sha512'
-// import { throwNewError } from '../../../errors'
-// import * as ed25519Crypto from '../../../crypto/ed25519Crypto'
-// import {
-//   byteArrayToHexString,
-//   bufferToUint8Array,
-//   hexStringToByteArray,
-//   isABuffer,
-//   isAString,
-//   isAUint8Array,
-//   isNullOrEmpty,
-// } from '../../../helpers'
+
+import { Helpers, Crypto, Errors } from '@open-rights-exchange/chainjs'
 import {
   ALGORAND_ADDRESS_BYTES_ONLY_LENGTH,
   ALGORAND_CHECKSUM_BYTE_LENGTH,
   ALGORAND_ADDRESS_LENGTH,
 } from '../algoConstants'
 import { AlgorandPublicKey, AlgorandSignature, AlgorandPrivateKey, AlgorandAddress } from '../models'
-import { Models, ChainFactory, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
 
 /**
  * ConcatArrays takes two array and returns a joint Uint8 array of both

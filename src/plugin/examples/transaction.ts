@@ -5,15 +5,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 
-//import { ChainFactory, ChainType } from '../../../index'
-//import { ChainEndpoint, ChainActionType, TxExecutionPriority, ConfirmType } from '../../../models'
+// import { ChainFactory, ChainType } from '../../../index'
+// import { ChainEndpoint, ChainActionType, TxExecutionPriority, ConfirmType } from '../../../models'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
 import { AlgorandAddress, AlgorandUnit, AlgorandValue } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
 import { AlgorandTransaction } from '../algoTransaction'
 import { AlgorandChainState } from '../algoChainState'
 import ChainAlgorandV1 from '../ChainAlgorandV1'
-//import { jsonParseAndRevive, sleep } from '../../../helpers'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
+// import { jsonParseAndRevive, sleep } from '../../../helpers'
 
 
 require('dotenv').config()
