@@ -22,7 +22,10 @@
   },
   "homepage": "https://github.com/TeamAikon/chainjs-plugin-algorand#readme",
   "dependencies": {
-    "algosdk": "^1.11.1"
+    "algosdk": "^1.11.1",
+    "tweetnacl": "^1.0.3",
+    "hi-base32": "^0.5.0",
+    "js-sha512": "^0.8.0"
   },
   "devDependencies": {
     "@types/bs58": "^4.0.1",
