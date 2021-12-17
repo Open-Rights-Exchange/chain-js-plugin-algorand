@@ -117,7 +117,7 @@ export class AlgorandActionHelper {
         : undefined,
       // raw appArgs is an array of UInt8Array - since we cant know what type to decode it to, we convert each to a hexstring - with '0x' prefix for clarity
       appArgs: !Helpers.isNullOrEmpty(this.raw.appArgs) ? this.decodeRawAppArgsToReadable(this.raw.appArgs) : undefined,
-      group: this.raw.group ? Helpers.bufferToString(this.raw.group) : undefined,
+      group: this.raw.group ? Helpers.bufferToString(this.raw.group, 'base64') : undefined,
       lease: !Helpers.isNullOrEmpty(this.raw.lease) ? (algosdk.decodeObj(this.raw.lease) as any) : undefined,
       note: !Helpers.isNullOrEmpty(this.raw.note) ? (algosdk.decodeObj(this.raw.note) as any) : undefined,
       selectionKey: this.raw.selectionKey ? Helpers.bufferToString(this.raw.selectionKey) : undefined,
@@ -247,7 +247,7 @@ export class AlgorandActionHelper {
     if (!Helpers.isNullOrEmpty(appClearProgram) && Helpers.isHexString(appClearProgram)) {
       params.appClearProgram = Helpers.hexStringToByteArray(appClearProgram)
     }
-    if (!Helpers.isNullOrEmpty(group) && !Buffer.isBuffer(group)) params.group = Helpers.toBuffer(group)
+    if (!Helpers.isNullOrEmpty(group) && !Buffer.isBuffer(group)) params.group = Helpers.toBufferIfNeededFromAny(group)
     if (!Helpers.isNullOrEmpty(lease) && !Helpers.isAUint8Array(lease)) params.lease = algosdk.encodeObj(lease)
     if (!Helpers.isNullOrEmpty(note) && !Helpers.isAUint8Array(note)) params.note = algosdk.encodeObj(note)
     if (!Helpers.isNullOrEmpty(selectionKey) && !Buffer.isBuffer(selectionKey))

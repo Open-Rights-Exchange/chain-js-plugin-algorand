@@ -76,7 +76,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   private _actionHelper: AlgorandActionHelper
 
   /** Instance of Algorand SDK's Algorand Transaction Class */
-  private _algoSdkTransaction: any
+  private _algoSdkTransaction: AlgoTransactionClass
 
   private _chainState: AlgorandChainState
 
@@ -248,6 +248,10 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return { ...this._actionHelper?.action }
   }
 
+  public get algoSdkTransaction(): AlgoTransactionClass {
+    return this._algoSdkTransaction
+  }
+
   /** update the private instance of AlgorandTransaction object using action info */
   public setAlgoSdkTransactionFromAction() {
     if (Helpers.isNullOrEmpty(this._actionHelper?.actionEncodedForSdk)) {
@@ -256,6 +260,8 @@ export class AlgorandTransaction implements Interfaces.Transaction {
       const chainTxHeaderParams = this._chainState.chainInfo.nativeInfo.transactionHeaderParams
       this._actionHelper.applyCurrentTxHeaderParamsWhereNeeded(chainTxHeaderParams, this.options)
       this._algoSdkTransaction = new AlgoTransactionClass(this._actionHelper.actionEncodedForSdk as any)
+      // Algosdk's Transaction Class doesnt allow instantiating group id from constructor thus we explicitly set it unlike other params.
+      this._algoSdkTransaction.group = this._actionHelper.actionEncodedForSdk.group
     }
   }
 
@@ -508,6 +514,10 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return rawTransaction
   }
 
+  get encodedRawTransaction(): string {
+    return Helpers.byteArrayToHexString(new Uint8Array(algosdk.encodeObj(this.rawTransaction)))
+  }
+
   /** Determine standard multisig options from raw msig struct */
   private multisigOptionsFromRawTransactionMultisig(msig: AlgorandMultiSignatureMsigStruct): AlgorandMultisigOptions {
     if (Helpers.isNullOrEmpty(msig)) return null
@@ -570,10 +580,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
       this.signMultiSigTransaction(privateKeys)
     } else {
       const privateKey = Helpers.hexStringToByteArray(privateKeys[0])
-      const signResults: AlgorandTxSignResults = algosdk.signTransaction(
-        this._actionHelper.actionEncodedForSdk as TransactionLike,
-        privateKey,
-      )
+      const signResults: AlgorandTxSignResults = algosdk.signTransaction(this._algoSdkTransaction, privateKey)
       this.setRawTransactionFromSignResults(signResults)
       // the signer is the publicKey associated with the privateKey
       this._signedByPublicKey = getAlgorandPublicKeyFromPrivateKey(
@@ -781,7 +788,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
 
   /** Returns Algorand specific transaction resource unit (bytes) */
   public async resourcesRequired(): Promise<AlgorandTransactionResources> {
-    const bytes = await this._algoSdkTransaction?.estimateSize()
+    const bytes = this.algoSdkTransaction?.estimateSize()
     return { bytes }
   }
 
