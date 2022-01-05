@@ -121,7 +121,7 @@ export async function decryptWithPrivateKeys(
   encrypted: Crypto.Asymmetric.AsymmetricEncryptedDataString,
   privateKeys: AlgorandPrivateKey[],
   options?: any,
-): Promise<string> {
+): Promise<{ decrypted: string; remaining: CryptoAsymmetricModels.AsymmetricEncryptedData[] }> {
   return CryptoAsymmetricHelpers.decryptWithPrivateKeys(decryptWithPrivateKey, encrypted, privateKeys, options)
 }
 
