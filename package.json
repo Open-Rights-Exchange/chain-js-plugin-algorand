@@ -1,5 +1,5 @@
 {
-  "name": "@open-rights-exchange/chainjs-plugin-algorand",
+  "name": "@open-rights-exchange/chain-js-plugin-algorand",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/index.js",
