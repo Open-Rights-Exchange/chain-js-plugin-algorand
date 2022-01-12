@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 // import { ChainFactory, ChainType } from '../../../index'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chain-js'
 import { toAlgorandPrivateKey, toAlgorandPublicKey } from '../helpers'
 
 

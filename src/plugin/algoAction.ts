@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import * as algosdk from 'algosdk'
 import { Transaction as AlgoTransactionClass } from 'algosdk'
-import { Helpers, Errors } from '@open-rights-exchange/chainjs'
+import { Helpers, Errors } from '@open-rights-exchange/chain-js'
 import {
   AlgorandTransactionOptions,
   AlgorandTxAction,

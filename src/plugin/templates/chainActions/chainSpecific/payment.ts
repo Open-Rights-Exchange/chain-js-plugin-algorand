@@ -1,5 +1,5 @@
 import * as algosdk from 'algosdk'
-import { Helpers } from '@open-rights-exchange/chainjs'
+import { Helpers } from '@open-rights-exchange/chain-js'
 import {
   AlgorandDecomposeReturn,
   AlgorandActionPaymentParams,

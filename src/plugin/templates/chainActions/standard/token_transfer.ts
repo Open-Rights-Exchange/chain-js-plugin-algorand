@@ -1,6 +1,6 @@
 // import { toTokenValueString } from '../../../../../helpers'
 // import { ActionDecomposeReturn, ChainActionType, TokenTransferParams } from '../../../../../models'
-import { Models, Helpers } from '@open-rights-exchange/chainjs'
+import { Models, Helpers } from '@open-rights-exchange/chain-js'
 import {
   AlgorandSuggestedParams,
   AlgorandActionAssetTransferParams,

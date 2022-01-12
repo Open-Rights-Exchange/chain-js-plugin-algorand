@@ -2,7 +2,7 @@
 
 // import { jsonParseAndRevive, toChainEntityName } from '../../../helpers'
 // import { ChainFactory, ChainType } from '../../..'
-import { Models, PluginChainFactory, Helpers } from '@open-rights-exchange/chainjs'
+import { Models, PluginChainFactory, Helpers } from '@open-rights-exchange/chain-js'
 import { multisigChainSerialized } from './mockups/multisig'
 // import { ChainActionType, ValueTransferParams } from '../../../models'
 import { determineMultiSigAddress, toAlgorandPrivateKey } from '../helpers'

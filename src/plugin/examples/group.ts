@@ -7,7 +7,7 @@
 
 import * as algosdk from 'algosdk'
 // import { ChainFactory, ChainType } from '../../../index'
-import { ChainFactory, ChainType } from '@open-rights-exchange/chainjs'
+import { ChainFactory, ChainType } from '@open-rights-exchange/chain-js'
 import { AlgorandTransactionOptions } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
 import { AlgorandTransaction } from '..'

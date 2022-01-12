@@ -1,6 +1,6 @@
 import * as nacl from 'tweetnacl'
 // import { IndexedObject } from '../../models'
-import { Models } from '@open-rights-exchange/chainjs'
+import { Models } from '@open-rights-exchange/chain-js'
 import { AlgorandUnit } from './models'
 
 export const ALGORAND_ADDRESS_LENGTH = 58

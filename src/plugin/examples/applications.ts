@@ -8,7 +8,7 @@ import fs from 'fs'
 import * as algosdk from 'algosdk'
 // import { ChainFactory, ChainType } from '../../../index'
 // import { ChainActionType, ChainEndpoint, ConfirmType, TokenTransferParams } from '../../../models'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chain-js'
 import {
   AlgorandActionAppCreateParams,
   AlgorandActionAppMultiPurposeParams,

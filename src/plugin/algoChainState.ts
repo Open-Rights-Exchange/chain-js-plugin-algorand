@@ -1,5 +1,5 @@
 import algosdk from 'algosdk'
-import { Models, Helpers, Errors, Interfaces } from '@open-rights-exchange/chainjs'
+import { Models, Helpers, Errors, Interfaces } from '@open-rights-exchange/chain-js'
 import {
   AlgorandAddress,
   AlgoClient,

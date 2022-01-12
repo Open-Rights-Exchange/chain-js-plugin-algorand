@@ -1,6 +1,6 @@
 import * as algosdk from 'algosdk'
 // import { isNullOrEmpty } from '../../../../../helpers'
-import { Helpers } from '@open-rights-exchange/chainjs'
+import { Helpers } from '@open-rights-exchange/chain-js'
 import {
   AlgorandDecomposeReturn,
   AlgorandChainActionType,

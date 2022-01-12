@@ -2,7 +2,7 @@ import * as base32 from 'hi-base32'
 import * as nacl from 'tweetnacl'
 import * as sha512 from 'js-sha512'
 
-import { Helpers, Crypto, Errors } from '@open-rights-exchange/chainjs'
+import { Helpers, Crypto, Errors } from '@open-rights-exchange/chain-js'
 import {
   ALGORAND_ADDRESS_BYTES_ONLY_LENGTH,
   ALGORAND_CHECKSUM_BYTE_LENGTH,

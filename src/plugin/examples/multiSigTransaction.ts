@@ -6,7 +6,7 @@
 /* eslint-disable no-console */
 // import { ChainFactory, ChainType } from '../../../index'
 // import { ChainEndpoint, ChainActionType, ValueTransferParams } from '../../../models'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chain-js'
 import { AlgorandAddress, AlgorandMultisigOptions, AlgorandUnit, AlgorandValue } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
 // import { toChainEntityName } from '../../../helpers'

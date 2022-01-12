@@ -4,7 +4,7 @@
 
 // import { JsonRpc } from 'eosjs' // No idea why we need eosjs in an Algo test?
 
-// import { Models, Errors } from '@open-rights-exchange/chainjs'
+// import { Models, Errors } from '@open-rights-exchange/chain-js'
 // import { mapChainError } from '../algoErrors'
 // import { ChainErrorType } from '../../../models'
 

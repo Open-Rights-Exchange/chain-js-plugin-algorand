@@ -1,4 +1,4 @@
-import { Models, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chainjs'
+import { Models, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chain-js'
 import {
   AlgorandAddress,
   AlgorandChainActionType,

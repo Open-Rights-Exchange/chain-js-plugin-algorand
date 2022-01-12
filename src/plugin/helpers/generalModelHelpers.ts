@@ -1,7 +1,7 @@
 import { isValidAddress } from 'algosdk'
 import * as base32 from 'hi-base32'
 // import { isNullOrEmpty, byteArrayToHexString } from '../../../helpers'
-import { Helpers } from '@open-rights-exchange/chainjs'
+import { Helpers } from '@open-rights-exchange/chain-js'
 
 import {
   AlgorandAddress,

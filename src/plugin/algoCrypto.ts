@@ -9,7 +9,7 @@ import {
   CryptoAsymmetricHelpers,
   CryptoHelpers,
   CryptoAsymmetricModels,
-} from '@open-rights-exchange/chainjs'
+} from '@open-rights-exchange/chain-js'
 import {
   AlgoEncryptionOptions,
   AlgorandGeneratedAccountStruct,

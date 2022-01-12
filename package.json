@@ -22,11 +22,12 @@
   },
   "homepage": "https://github.com/open-rights-exchange/chainjs-plugin-algorand#readme",
   "dependencies": {
+    "@open-rights-exchange/chain-js": "^4.0.0",
     "algosdk": "^1.11.1",
     "dotenv": "^8.0.0",
-    "tweetnacl": "^1.0.3",
     "hi-base32": "^0.5.0",
-    "js-sha512": "^0.8.0"
+    "js-sha512": "^0.8.0",
+    "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
     "@types/bs58": "^4.0.1",

@@ -7,7 +7,7 @@
 
 // import { ChainFactory, ChainType } from '../../../index'
 // import { ChainEndpoint, ChainActionType, TokenTransferParams } from '../../../models'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chain-js'
 import { AlgorandActionAssetTransferParams, AlgorandChainActionType, AlgorandActionPaymentParams, AlgorandTransactionOptions } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
 

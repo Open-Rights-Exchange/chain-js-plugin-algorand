@@ -13,7 +13,7 @@ import {
   Crypto,
   Errors,
   Interfaces,
-} from '@open-rights-exchange/chainjs'
+} from '@open-rights-exchange/chain-js'
 import { mapChainError } from './algoErrors'
 // import { throwNewError } from '../../errors'
 // import {

@@ -1,4 +1,4 @@
-import { Models, Helpers } from '@open-rights-exchange/chainjs'
+import { Models, Helpers } from '@open-rights-exchange/chain-js'
 import { composeAction as TokenTransferTemplate } from './templates/chainActions/standard/token_transfer'
 import { composeAction as ValueTransferTemplate } from './templates/chainActions/standard/value_transfer'
 import { composeAction as ApplicationClearTemplate } from './templates/chainActions/chainSpecific/application_clear'

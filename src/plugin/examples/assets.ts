@@ -6,7 +6,7 @@
 
 // import { ChainFactory, ChainType } from '../../../index'
 // import { ChainActionType, ChainEndpoint, TokenTransferParams, TxExecutionPriority } from '../../../models'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chainjs'
+import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chain-js'
 import {
   AlgorandActionAssetConfigParams,
   AlgorandChainActionType,

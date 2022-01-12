@@ -11,7 +11,7 @@ import {
   Crypto,
   Errors,
   Interfaces,
-} from '@open-rights-exchange/chainjs'
+} from '@open-rights-exchange/chain-js'
 import { AlgorandAccountStruct, AlgorandAddress, AlgorandPublicKey } from './models'
 import { AlgorandChainState } from './algoChainState'
 import { toAddressFromPublicKey } from './helpers/cryptoModelHelpers'

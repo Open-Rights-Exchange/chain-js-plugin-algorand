@@ -1,6 +1,6 @@
 // import { Ed25519Crypto } from '../../../crypto'
 // import { ChainEntityNameBrand, PrivateKeyBrand, PublicKeyBrand, SignatureBrand } from '../../../models'
-import { Models, Crypto } from '@open-rights-exchange/chainjs'
+import { Models, Crypto } from '@open-rights-exchange/chain-js'
 
 /** an address string - formatted correctly for algorand */
 export type AlgorandAddress = string

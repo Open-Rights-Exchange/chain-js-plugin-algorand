@@ -1,7 +1,7 @@
 // import { throwNewError } from '../../errors'
 // import { CreateAccount } from '../../interfaces'
 // import { isNullOrEmpty, notSupported } from '../../helpers'
-import { Helpers, Errors, Interfaces } from '@open-rights-exchange/chainjs'
+import { Helpers, Errors, Interfaces } from '@open-rights-exchange/chain-js'
 import {
   AlgorandCreateAccountOptions,
   AlgorandEntityName,

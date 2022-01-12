@@ -1,4 +1,4 @@
-import { Models } from '@open-rights-exchange/chainjs'
+import { Models } from '@open-rights-exchange/chain-js'
 import { AlgorandAddress } from './cryptoModels'
 // import { ChainActionType } from '../../../models'
 

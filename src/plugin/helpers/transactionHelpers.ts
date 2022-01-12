@@ -1,7 +1,7 @@
 import * as algosdk from 'algosdk'
 import { TextEncoder } from 'util'
 // import { byteArrayToHexString, isAUint8Array, isHexString, isNullOrEmpty } from '../../../helpers'
-import { Helpers } from '@open-rights-exchange/chainjs'
+import { Helpers } from '@open-rights-exchange/chain-js'
 import {
   AlgoClient,
   AlgorandMultisigAccount,

@@ -1,4 +1,4 @@
-import { Helpers } from '@open-rights-exchange/chainjs'
+import { Helpers } from '@open-rights-exchange/chain-js'
 import { AlgorandTxAction, AlgorandTxActionRaw, AlgorandTxActionSdkEncoded, AlgorandDecomposeReturn } from './models'
 // import { isNullOrEmpty } from '../../helpers'
 import { decomposeAction as TokenTransferTemplate } from './templates/chainActions/standard/token_transfer'
