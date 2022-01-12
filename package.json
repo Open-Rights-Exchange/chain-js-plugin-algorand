@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TeamAikon/chainjs-plugin-algorand.git"
+    "url": "git+https://github.com/open-rights-exchange/chainjs-plugin-algorand.git"
   },
   "author": "AIKON",
   "bugs": {
-    "url": "https://github.com/TeamAikon/chainjs-plugin-algorand/issues"
+    "url": "https://github.com/open-rights-exchange/chainjs-plugin-algorand/issues"
   },
-  "homepage": "https://github.com/TeamAikon/chainjs-plugin-algorand#readme",
+  "homepage": "https://github.com/open-rights-exchange/chainjs-plugin-algorand#readme",
   "dependencies": {
     "algosdk": "^1.11.1",
     "dotenv": "^8.0.0",
