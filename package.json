@@ -1,16 +1,19 @@
 {
   "name": "@open-rights-exchange/chain-js-plugin-algorand",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
+  "sideEffects": false,
+  "type": "module",
   "scripts": {
     "build": "rm -rf dist/* && tsc --build tsconfig.json",
     "lint": "eslint src",
     "lint-fix": "eslint src --fix",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
-    "test": "jest --runInBand --coverage --detectOpenHandles"
+    "test": "jest --runInBand --coverage --detectOpenHandles",
+    "localpublish": "zalc publish && zalc push"
   },
   "repository": {
     "type": "git",
@@ -22,7 +25,6 @@
   },
   "homepage": "https://github.com/open-rights-exchange/chainjs-plugin-algorand#readme",
   "dependencies": {
-    "@open-rights-exchange/chain-js": "^4.0.0",
     "algosdk": "^1.11.1",
     "dotenv": "^8.0.0",
     "hi-base32": "^0.5.0",
@@ -48,5 +50,12 @@
     "ts-jest": "^27.0.7",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
-  }
+  },
+  "peerDependencies": {
+    "@open-rights-exchange/chain-js": "^4.0.0"
+  },  
+  "files": [
+    "dist",
+    "src"
+  ]
 }

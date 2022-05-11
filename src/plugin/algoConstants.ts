@@ -1,4 +1,4 @@
-import * as nacl from 'tweetnacl'
+import nacl from 'tweetnacl'
 // import { IndexedObject } from '../../models'
 import { Models } from '@open-rights-exchange/chain-js'
 import { AlgorandUnit } from './models'
