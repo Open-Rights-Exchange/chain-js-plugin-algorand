@@ -1,4 +1,4 @@
-import fs from 'fs'
+var fs = require('fs')
 
 function makeModuleNameMapper() {
   const aliases = {};
@@ -14,7 +14,7 @@ function makeModuleNameMapper() {
 }
 
 
-export default {
+module.exports = {
   automock: false,
   roots: [
     '<rootDir>/tests',
