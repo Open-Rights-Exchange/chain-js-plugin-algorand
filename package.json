@@ -3,8 +3,8 @@
   "version": "4.1.0",
   "description": "",
   "main": "dist/cjs/src/index.js",
-  "module": "dist/mjs/src/index.js",
-  "types": "dist/mjs/src/index.d.ts",
+  "_module": "dist/mjs/src/index.js",
+  "_types": "dist/mjs/src/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "_build": "rm -rf dist/* && tsc --build tsconfig.json",
@@ -14,7 +14,7 @@
     "lint": "eslint src",
     "lint-fix": "eslint src --fix",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
+    "_prepublishOnly": "npm test && npm run lint",
     "test": "jest --runInBand --coverage --detectOpenHandles",
     "localpublish": "zalc publish && zalc push",
     "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup"
@@ -62,7 +62,6 @@
     "@open-rights-exchange/chain-js": "^4.0.0"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ]
 }
