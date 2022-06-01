@@ -45,3 +45,8 @@ export const TRANSACTION_FEE_PRIORITY_MULTIPLIERS: Models.IndexedObject = {
   average: 1,
   fast: 1.2,
 }
+
+export const ALGORAND_EXPIRATION_SUPPORTED_OPTIONS: Models.TransactionSupportedExpirationOptions = {
+  transactionsExpirationType: Models.TransactionExpirationType.Window,
+  maxWindowOfSeconds: Math.floor(ALGORAND_DEFAULT_TRANSACTION_VALID_BLOCKS * ALGORAND_CHAIN_BLOCK_FREQUENCY),
+}

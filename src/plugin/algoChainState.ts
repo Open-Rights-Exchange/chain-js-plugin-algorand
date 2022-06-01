@@ -2,17 +2,14 @@ import algosdk from 'algosdk'
 import { Models, Helpers, Errors, Interfaces } from '@open-rights-exchange/chain-js'
 import {
   AlgorandAddress,
-  AlgoClient,
-  AlgoClientIndexer,
   AlgorandBlock,
-  AlgorandChainEndpoint,
-  AlgorandChainInfo,
-  AlgorandChainSettings,
   AlgorandChainTransactionParamsStruct,
   AlgorandSymbol,
   AlgorandTxChainResponse,
   AlgorandTxResult,
   AlgorandUnit,
+  AlgorandRawTransactionStruct,
+  AlgorandRawTransactionMultisigStruct,
 } from './models'
 import {
   ALGORAND_POST_CONTENT_TYPE,
@@ -24,6 +21,13 @@ import {
 } from './algoConstants'
 import { toAlgo } from './helpers'
 import { mapChainError } from './algoErrors'
+import {
+  AlgoClient,
+  AlgoClientIndexer,
+  AlgorandChainEndpoint,
+  AlgorandChainInfo,
+  AlgorandChainSettings,
+} from './models/chainModels'
 
 export class AlgorandChainState implements Interfaces.ChainState {
   private _activeEndpoint: AlgorandChainEndpoint
@@ -551,5 +555,15 @@ export class AlgorandChainState implements Interfaces.ChainState {
       checkInterval = MINIMUM_CHECK_INTERVAL
     }
     return checkInterval
+  }
+
+  public async isTransactionExpired(
+    transaction: AlgorandRawTransactionStruct | AlgorandRawTransactionMultisigStruct,
+  ): Promise<boolean> {
+    const { txn } = transaction
+    const { lv: lastRound } = txn
+    const { headBlockNumber } = await this.getChainInfo()
+    if (headBlockNumber > lastRound) return true
+    return false
   }
 }

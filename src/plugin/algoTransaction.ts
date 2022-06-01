@@ -4,16 +4,7 @@ import * as algosdk from 'algosdk'
 import { Transaction as AlgoTransactionClass, TransactionLike } from 'algosdk'
 // import { Transaction } from '../../interfaces'
 // import { ChainErrorType, ChainSettingsCommunicationSettings, ConfirmType, TxExecutionPriority } from '../../models'
-import {
-  Models,
-  ChainFactory,
-  Helpers,
-  Chain,
-  ChainJsPlugin,
-  Crypto,
-  Errors,
-  Interfaces,
-} from '@open-rights-exchange/chain-js'
+import { Models, Helpers, Errors, Interfaces } from '@open-rights-exchange/chain-js'
 import { mapChainError } from './algoErrors'
 // import { throwNewError } from '../../errors'
 // import {
@@ -44,6 +35,7 @@ import {
   AlgorandTxSignResults,
   AlgorandTransactionResources,
   AlgorandMultiSignatureMsigStruct,
+  TransactionExpirationOptions,
 } from './models'
 import { AlgorandActionHelper } from './algoAction'
 import {
@@ -70,7 +62,11 @@ import {
   getAlgorandPublicKeyFromPrivateKey,
   verifySignedWithPublicKey as verifySignatureForDataAndPublicKey,
 } from './algoCrypto'
-import { MINIMUM_TRANSACTION_FEE_FALLBACK, TRANSACTION_FEE_PRIORITY_MULTIPLIERS } from './algoConstants'
+import {
+  ALGORAND_EXPIRATION_SUPPORTED_OPTIONS,
+  MINIMUM_TRANSACTION_FEE_FALLBACK,
+  TRANSACTION_FEE_PRIORITY_MULTIPLIERS,
+} from './algoConstants'
 
 export class AlgorandTransaction implements Interfaces.Transaction {
   private _actionHelper: AlgorandActionHelper
@@ -310,6 +306,11 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     this.actions = [action]
   }
 
+  public async assertTransactionNotExpired(): Promise<void> {
+    const hasExpired = await this._chainState.isTransactionExpired(this.rawTransaction)
+    if (hasExpired) Errors.throwNewError('Transaction has expired!')
+  }
+
   // validation
 
   /** Verifies that raw trx exists
@@ -317,6 +318,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   public async validate(): Promise<void> {
     this.assertHasAction()
     this.assertHasRaw()
+    await this.assertTransactionNotExpired()
     if (this.isMultisig) {
       this.assertMultisigFromMatchesOptions(this.actions[0])
     }
@@ -648,14 +650,19 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   /** apply options and/or use defaults */
   private applyOptions(options: AlgorandTransactionOptions) {
     this.assertValidOptions(options)
-    const { multisigOptions, signerPublicKey } = options || {}
-    let { expireSeconds, fee, flatFee } = options || {}
+    const { expirationOptions = {}, multisigOptions, signerPublicKey } = options || {}
+    let { fee, flatFee } = options || {}
     const { defaultTransactionSettings } = this._chainState?.chainSettings || {}
-    expireSeconds = expireSeconds ?? defaultTransactionSettings?.expireSeconds
+    expirationOptions.expireSeconds =
+      expirationOptions?.expireSeconds ?? defaultTransactionSettings?.expirationOptions?.expireSeconds
+    expirationOptions.windowSeconds =
+      expirationOptions?.windowSeconds ??
+      defaultTransactionSettings?.expirationOptions?.windowSeconds ??
+      ALGORAND_EXPIRATION_SUPPORTED_OPTIONS.maxFutureSeconds
     fee = fee ?? defaultTransactionSettings?.fee
     flatFee = flatFee ?? defaultTransactionSettings?.flatFee
     this._options = {
-      expireSeconds,
+      expirationOptions,
       fee,
       flatFee,
       multisigOptions,

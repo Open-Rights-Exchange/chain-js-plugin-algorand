@@ -263,6 +263,7 @@ export class AlgorandActionHelper {
     chainTxParams: AlgorandChainTransactionParamsStruct,
     transactionOptions?: AlgorandTransactionOptions,
   ) {
+    const { expirationOptions } = transactionOptions || {}
     const rawAction = this.raw
     rawAction.genesisID = rawAction.genesisID || chainTxParams.genesisID
     rawAction.genesisHash = rawAction.genesisHash || Helpers.toBuffer(chainTxParams.genesisHash, 'base64')
@@ -271,14 +272,14 @@ export class AlgorandActionHelper {
     // if firstRound and/or lastRound are missing, set them
     if (!rawAction?.firstRound && !rawAction?.lastRound) {
       // if expireSeconds options is provided, override firstRound and lastRound
-      if ((transactionOptions?.expireSeconds || 0) > 0) {
+      if ((expirationOptions?.expireSeconds || 0) > 0) {
         // adjust last block to be expireSeconds from now - first block will be ALGORAND_DEFAULT_TRANSACTION_VALID_BLOCKS before the last block (e.g. 1000)
         rawAction.lastRound =
-          chainTxParams.firstRound + Math.floor(transactionOptions?.expireSeconds / ALGORAND_CHAIN_BLOCK_FREQUENCY)
+          chainTxParams.firstRound + Math.floor(expirationOptions?.expireSeconds / ALGORAND_CHAIN_BLOCK_FREQUENCY)
         // we'll set first round 1000 before the last round - unless the current round is higher, in which case, use the current round
         rawAction.firstRound = Math.max(
           chainTxParams.firstRound,
-          rawAction.lastRound - ALGORAND_DEFAULT_TRANSACTION_VALID_BLOCKS,
+          rawAction.lastRound - expirationOptions?.windowSeconds / ALGORAND_CHAIN_BLOCK_FREQUENCY,
         )
       } else {
         rawAction.firstRound = rawAction.firstRound || chainTxParams.firstRound

@@ -54,10 +54,15 @@ export type AlgorandSuggestedParams = {
   flatFee?: boolean
 }
 
+export type TransactionExpirationOptions = {
+  expireSeconds?: number
+  windowSeconds?: number
+}
+
 /** Transaction 'header' options set to chain along with the content type */
 export type AlgorandTransactionOptions = {
   /** Number of seconds after which transaction expires - must be submitted to the chain before then */
-  expireSeconds?: number
+  expirationOptions?: TransactionExpirationOptions
   fee?: AlgorandValue
   flatFee?: boolean
   multisigOptions?: AlgorandMultisigOptions
