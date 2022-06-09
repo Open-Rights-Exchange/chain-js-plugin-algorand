@@ -8,7 +8,7 @@ import fs from 'fs'
 import * as algosdk from 'algosdk'
 // import { ChainFactory, ChainType } from '../../../index'
 // import { ChainActionType, ChainEndpoint, ConfirmType, TokenTransferParams } from '../../../models'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chain-js'
+import { Models, Helpers, PluginChainFactory } from '@open-rights-exchange/chain-js'
 import {
   AlgorandActionAppCreateParams,
   AlgorandActionAppMultiPurposeParams,
@@ -87,7 +87,7 @@ const sampleRawNoOPTrx = {
 }
 
 async function getAppIds() {
-  const algoTest = new ChainFactory().create(Models.ChainType.AlgorandV1, algoTestnetEndpoints) as ChainAlgorandV1
+  const algoTest = PluginChainFactory([ChainAlgorandV1], Models.ChainType.AlgorandV1, algoTestnetEndpoints) as ChainAlgorandV1
   await algoTest.connect()
   if (algoTest.isConnected) {
     console.log('Connected to %o', algoTest.chainId)
@@ -104,7 +104,7 @@ async function getAppIds() {
 async function run() {
   /** Create Algorand chain instance */
   
-  const algoTest = new ChainFactory().create(Models.ChainType.AlgorandV1, algoTestnetEndpoints) as ChainAlgorandV1
+  const algoTest = PluginChainFactory([ChainAlgorandV1], Models.ChainType.AlgorandV1, algoTestnetEndpoints) as ChainAlgorandV1
   await algoTest.connect()
   if (algoTest.isConnected) {
     console.log('Connected to %o', algoTest.chainId)

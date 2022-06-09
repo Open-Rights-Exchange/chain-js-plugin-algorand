@@ -7,10 +7,10 @@
 
 // import { ChainFactory, ChainType } from '../../../index'
 // import { ChainEndpoint, ChainActionType, TokenTransferParams } from '../../../models'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chain-js'
+import { Models, Helpers, PluginChainFactory } from '@open-rights-exchange/chain-js'
 import { AlgorandActionAssetTransferParams, AlgorandChainActionType, AlgorandActionPaymentParams, AlgorandTransactionOptions } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
-
+import ChainAlgorandV1  from '../ChainAlgorandV1'
 
 require('dotenv').config()
 
@@ -54,7 +54,7 @@ const composeAlgoReKeyParamsToA: Partial<AlgorandActionPaymentParams> = {
 
 async function run() {
   /** Create Algorand chain instance */
-  const algoBeta = new ChainFactory().create(Models.ChainType.AlgorandV1, algoBetanetEndpoints)
+  const algoBeta = PluginChainFactory([ChainAlgorandV1], Models.ChainType.AlgorandV1, algoBetanetEndpoints)
   await algoBeta.connect()
   if (algoBeta.isConnected) {
     console.log('Connected to %o', algoBeta.chainId)

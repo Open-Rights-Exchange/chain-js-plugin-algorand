@@ -2,16 +2,7 @@
 // import { notImplemented } from '../../helpers'
 // import { Account } from '../../interfaces'
 // import { throwNewError } from '../../errors'
-import {
-  Models,
-  ChainFactory,
-  Helpers,
-  Chain,
-  ChainJsPlugin,
-  Crypto,
-  Errors,
-  Interfaces,
-} from '@open-rights-exchange/chain-js'
+import { Models, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chain-js'
 import { AlgorandAccountStruct, AlgorandAddress, AlgorandPublicKey } from './models'
 import { AlgorandChainState } from './algoChainState'
 import { toAddressFromPublicKey } from './helpers/cryptoModelHelpers'
