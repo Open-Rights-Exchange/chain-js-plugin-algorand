@@ -219,6 +219,9 @@ class Plugin implements Chain {
   /** Whether chain supports ability to get a publicKey from a signature */
   supportsGetPublicKeyFromSignature = false
 
+  /** Whether the chain supports resources */
+  supportsResources = false
+
   /** Verify that a 'personal message' was signed using the given key (Algorand does not append additional fields for a message) */
   verifySignedMessage = algoCrypto.verifySignedMessage
 
