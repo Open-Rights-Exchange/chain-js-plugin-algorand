@@ -2,8 +2,7 @@
 import { AlgorandPublicKey } from './cryptoModels'
 import { AlgorandMultisigOptions, AlgorandNewKeysOptions } from './generalModels'
 
-export type AlgorandAccountResources = {
-} 
+export type AlgorandAccountResources = {}
 
 export type AlgorandCreateAccountOptions = {
   publicKey?: AlgorandPublicKey

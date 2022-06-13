@@ -40,7 +40,7 @@ export class AlgorandAccount implements Interfaces.Account {
   get resources(): null {
     return null
   }
-  
+
   /** Whether the account name can be used for new account */
   isValidNewAccountName = async (accountName: string | AlgorandAddress): Promise<boolean> => {
     return isValidAlgorandAddress(accountName)
