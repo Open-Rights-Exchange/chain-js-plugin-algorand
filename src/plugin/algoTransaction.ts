@@ -793,6 +793,11 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return true
   }
 
+  /** Algorand does not support resources for transaction on chain */
+  public get requiresResources(): boolean {
+    return false
+  }
+
   /** Returns Algorand specific transaction resource unit (bytes) */
   public async resourcesRequired(): Promise<AlgorandTransactionResources> {
     const bytes = this.algoSdkTransaction?.estimateSize()
