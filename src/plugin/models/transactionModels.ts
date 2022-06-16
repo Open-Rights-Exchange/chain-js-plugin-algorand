@@ -154,13 +154,6 @@ type AlgorandTxActionSharedFields = AlgorandTxHeaderParams & {
   reKeyTo?: AlgorandAddress
 }
 
-/** Algorand spesific transaction execution resource unit
- * Used for calculation transaction cost
- */
-export type AlgorandTransactionResources = {
-  bytes: number
-}
-
 // TODO: implement mapper to map this class to one of our Transaction types - this type is a class and has methods, etc.
 /** algoSdk.transaction object */
 export type AlgorandTransactionBuilder = any
