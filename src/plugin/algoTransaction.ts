@@ -648,19 +648,14 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   /** apply options and/or use defaults */
   private applyOptions(options: AlgorandTransactionOptions) {
     this.assertValidOptions(options)
-    const { expirationOptions = {}, multisigOptions, signerPublicKey } = options || {}
-    let { fee, flatFee } = options || {}
+    const { multisigOptions, signerPublicKey } = options || {}
+    let { expireSeconds, fee, flatFee } = options || {}
     const { defaultTransactionSettings } = this._chainState?.chainSettings || {}
-    expirationOptions.expireSeconds =
-      expirationOptions?.expireSeconds ?? defaultTransactionSettings?.expirationOptions?.expireSeconds
-    expirationOptions.windowSeconds =
-      expirationOptions?.windowSeconds ??
-      defaultTransactionSettings?.expirationOptions?.windowSeconds ??
-      ALGORAND_TRANSACTION_EXPIRATION_OPTIONS.maxFutureSeconds
+    expireSeconds = expireSeconds ?? defaultTransactionSettings?.expireSeconds
     fee = fee ?? defaultTransactionSettings?.fee
     flatFee = flatFee ?? defaultTransactionSettings?.flatFee
     this._options = {
-      expirationOptions,
+      expireSeconds,
       fee,
       flatFee,
       multisigOptions,
@@ -797,7 +792,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   }
 
   /** Algorand transactions do not require chain resources */
-  public async resourcesRequired(): Promise<void> {
+  public async resourcesRequired(): Promise<Models.TransactionResources> {
     Helpers.notSupported('Algorand does not require transaction resources')
   }
 

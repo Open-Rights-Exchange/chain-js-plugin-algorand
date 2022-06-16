@@ -64,9 +64,7 @@ async function run() {
   }
 
   const options: AlgorandTransactionOptions = {
-    expirationOptions: {
-      expireSeconds: 3600, // tx only valid for the next hour
-    },
+    expireSeconds: 3600, // tx only valid for the next hour
   }
 
   const suggestedParams = await algoBeta.algoClient.getTransactionParams().do()
