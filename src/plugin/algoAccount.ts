@@ -36,8 +36,9 @@ export class AlgorandAccount implements Interfaces.Account {
     return this._publicKey
   }
 
-  /** resources not supported by algo chains */
-  get resources(): null {
+  /** account resources not supported by algorand chains */
+  get resources(): void {
+    Helpers.notSupported('Algorand does not support account resources')
     return null
   }
 

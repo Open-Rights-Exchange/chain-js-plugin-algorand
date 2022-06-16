@@ -33,9 +33,7 @@ import {
   AlgorandTxActionSdkEncoded,
   AlgorandTxHeaderParams,
   AlgorandTxSignResults,
-  AlgorandTransactionResources,
   AlgorandMultiSignatureMsigStruct,
-  TransactionExpirationOptions,
 } from './models'
 import { AlgorandActionHelper } from './algoAction'
 import {
@@ -63,7 +61,7 @@ import {
   verifySignedWithPublicKey as verifySignatureForDataAndPublicKey,
 } from './algoCrypto'
 import {
-  ALGORAND_EXPIRATION_SUPPORTED_OPTIONS,
+  ALGORAND_TRANSACTION_EXPIRATION_OPTIONS,
   MINIMUM_TRANSACTION_FEE_FALLBACK,
   TRANSACTION_FEE_PRIORITY_MULTIPLIERS,
 } from './algoConstants'
@@ -658,7 +656,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     expirationOptions.windowSeconds =
       expirationOptions?.windowSeconds ??
       defaultTransactionSettings?.expirationOptions?.windowSeconds ??
-      ALGORAND_EXPIRATION_SUPPORTED_OPTIONS.maxFutureSeconds
+      ALGORAND_TRANSACTION_EXPIRATION_OPTIONS.maxFutureSeconds
     fee = fee ?? defaultTransactionSettings?.fee
     flatFee = flatFee ?? defaultTransactionSettings?.flatFee
     this._options = {
@@ -793,13 +791,18 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return true
   }
 
-  /** Algorand does not support resources for transaction on chain */
-  public get requiresResources(): boolean {
+  /** Algorand does not require chain resources for a transaction */
+  public get supportsResources(): boolean {
     return false
   }
 
+  /** Algorand transactions do not require chain resources */
+  public async resourcesRequired(): Promise<void> {
+    Helpers.notSupported('Algorand does not require transaction resources')
+  }
+
   /** Returns Algorand specific transaction resource unit (bytes) */
-  public async resourcesRequired(): Promise<AlgorandTransactionResources> {
+  async cost(): Promise<{ bytes: number }> {
     const bytes = this.algoSdkTransaction?.estimateSize()
     return { bytes }
   }
@@ -826,7 +829,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   /** Returns transaction fee in units of microalgos (expressed as a string) */
   public async getSuggestedFee(priority: Models.TxExecutionPriority): Promise<string> {
     try {
-      const { bytes } = await this.resourcesRequired()
+      const { bytes } = await this.cost()
       const { suggestedFeePerByte } = this._chainState
       let microalgos = bytes * suggestedFeePerByte * TRANSACTION_FEE_PRIORITY_MULTIPLIERS[priority]
       if (microalgos === 0) microalgos = this._chainState.minimumFeePerTx || MINIMUM_TRANSACTION_FEE_FALLBACK
