@@ -134,9 +134,7 @@ async function run() {
   }
 
   const options: AlgorandTransactionOptions = {
-    expirationOptions: {
-      expireSeconds: 3600, // tx only valid for the next hour
-    },
+    expireSeconds: 3600, // tx only valid for the next hour
   }
 
   /** Compose and send transaction */

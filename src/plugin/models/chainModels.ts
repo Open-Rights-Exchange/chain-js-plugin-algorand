@@ -2,7 +2,6 @@ import { Algodv2, Indexer } from 'algosdk'
 // import { ChainSettingsCommunicationSettings, ChainSymbolBrand, ModelsCryptoEd25519 } from '../../../models'
 import { Models } from '@open-rights-exchange/chain-js'
 import { AlgorandChainTransactionParamsStruct } from './algoStructures'
-import { TransactionExpirationOptions } from './transactionModels'
 import { AlgorandValue } from './generalModels'
 
 export type AlgoClient = Algodv2
@@ -46,7 +45,7 @@ export type AlgorandChainInfo = {
 export type AlgorandChainSettings = {
   communicationSettings?: Models.ChainSettingsCommunicationSettings
   defaultTransactionSettings?: {
-    expirationOptions?: TransactionExpirationOptions
+    expireSeconds?: number
     fee?: AlgorandValue
     flatFee?: boolean
   }

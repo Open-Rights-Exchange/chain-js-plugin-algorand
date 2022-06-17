@@ -62,7 +62,7 @@ export type TransactionExpirationOptions = {
 /** Transaction 'header' options set to chain along with the content type */
 export type AlgorandTransactionOptions = {
   /** Number of seconds after which transaction expires - must be submitted to the chain before then */
-  expirationOptions?: TransactionExpirationOptions
+  expireSeconds?: number
   fee?: AlgorandValue
   flatFee?: boolean
   multisigOptions?: AlgorandMultisigOptions
@@ -152,13 +152,6 @@ type AlgorandTxActionSharedFields = AlgorandTxHeaderParams & {
   appForeignApps?: number[]
   appForeignAssets?: number[]
   reKeyTo?: AlgorandAddress
-}
-
-/** Algorand spesific transaction execution resource unit
- * Used for calculation transaction cost
- */
-export type AlgorandTransactionResources = {
-  bytes: number
 }
 
 // TODO: implement mapper to map this class to one of our Transaction types - this type is a class and has methods, etc.

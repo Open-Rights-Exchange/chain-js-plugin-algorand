@@ -17,7 +17,7 @@ import { AlgorandTransaction } from './algoTransaction'
 import { composeAction } from './algoCompose'
 import { decomposeAction } from './algoDecompose'
 import {
-  ALGORAND_EXPIRATION_SUPPORTED_OPTIONS,
+  ALGORAND_TRANSACTION_EXPIRATION_OPTIONS,
   DEFAULT_ALGO_UNIT,
   NATIVE_CHAIN_TOKEN_ADDRESS,
   NATIVE_CHAIN_TOKEN_PRECISION,
@@ -70,8 +70,8 @@ class Plugin implements Chain {
   }
 
   /** Returns the supported expiration option metadata */
-  public get expirationSupportedOptions(): Models.TransactionSupportedExpirationOptions {
-    return ALGORAND_EXPIRATION_SUPPORTED_OPTIONS
+  public get transactionExpirationOptions(): Models.TransactionExpirationOptions {
+    return ALGORAND_TRANSACTION_EXPIRATION_OPTIONS
   }
 
   public get plugins(): ChainJsPlugin[] {

@@ -81,5 +81,17 @@ export async function composeAction(
   )
   // use AlgorandActionHelper to drop empty fields
   actionHelper = new AlgorandActionHelper(sdkEncodedActionParams as AlgorandTxActionSdkEncoded)
-  return sdkEncodedActionParams
+
+  // remove header fields that are automaticall set to default by AlgoranActionHelper
+  const {
+    fee: a,
+    flatFee: b,
+    firstRound: c,
+    lastRound: d,
+    genesisID: e,
+    genesisHash: f,
+    ...actionParams
+  } = sdkEncodedActionParams
+
+  return actionParams
 }
