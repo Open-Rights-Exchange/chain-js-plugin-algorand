@@ -2,16 +2,7 @@
 // import { notImplemented } from '../../helpers'
 // import { Account } from '../../interfaces'
 // import { throwNewError } from '../../errors'
-import {
-  Models,
-  ChainFactory,
-  Helpers,
-  Chain,
-  ChainJsPlugin,
-  Crypto,
-  Errors,
-  Interfaces,
-} from '@open-rights-exchange/chain-js'
+import { Models, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } from '@open-rights-exchange/chain-js'
 import { AlgorandAccountStruct, AlgorandAddress, AlgorandPublicKey } from './models'
 import { AlgorandChainState } from './algoChainState'
 import { toAddressFromPublicKey } from './helpers/cryptoModelHelpers'
@@ -43,6 +34,12 @@ export class AlgorandAccount implements Interfaces.Account {
   get publicKeys(): any {
     this.assertHasAccount()
     return this._publicKey
+  }
+
+  /** account resources not supported by algorand chains */
+  get resources(): Models.AccountResources {
+    Helpers.notSupported('Algorand does not support account resources')
+    return null
   }
 
   /** Whether the account name can be used for new account */

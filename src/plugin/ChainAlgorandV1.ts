@@ -2,9 +2,6 @@ import { Models, Helpers, Chain, ChainJsPlugin, Crypto, Errors, Interfaces } fro
 import {
   AlgorandAddress,
   AlgorandChainActionType,
-  AlgorandChainEndpoint,
-  AlgorandChainInfo,
-  AlgorandChainSettings,
   AlgorandCreateAccountOptions,
   AlgorandDecomposeReturn,
   AlgorandSymbol,
@@ -20,6 +17,7 @@ import { AlgorandTransaction } from './algoTransaction'
 import { composeAction } from './algoCompose'
 import { decomposeAction } from './algoDecompose'
 import {
+  ALGORAND_TRANSACTION_EXPIRATION_OPTIONS,
   DEFAULT_ALGO_UNIT,
   NATIVE_CHAIN_TOKEN_ADDRESS,
   NATIVE_CHAIN_TOKEN_PRECISION,
@@ -34,13 +32,12 @@ import {
   toAlgorandPublicKey,
   toAlgorandSignature,
 } from './helpers'
+import { AlgorandChainEndpoint, AlgorandChainInfo, AlgorandChainSettings } from './models/chainModels'
 // import { Asymmetric } from '../../crypto'
 // import { ChainJsPlugin, ChainJsPluginOptions } from '../../interfaces/plugin'
 
 class Plugin implements Chain {
   private _endpoints: AlgorandChainEndpoint[]
-
-  private _settings: AlgorandChainSettings
 
   private _chainState: AlgorandChainState
 
@@ -48,7 +45,6 @@ class Plugin implements Chain {
 
   constructor(endpoints: AlgorandChainEndpoint[], settings?: AlgorandChainSettings) {
     this._endpoints = endpoints
-    this._settings = settings
     this._chainState = new AlgorandChainState(endpoints, settings)
   }
 
@@ -71,6 +67,11 @@ class Plugin implements Chain {
 
   public get endpoints(): AlgorandChainEndpoint[] {
     return this._endpoints
+  }
+
+  /** Returns the supported expiration option metadata */
+  public get transactionExpirationOptions(): Models.TransactionExpirationOptions {
+    return ALGORAND_TRANSACTION_EXPIRATION_OPTIONS
   }
 
   public get plugins(): ChainJsPlugin[] {
@@ -218,6 +219,9 @@ class Plugin implements Chain {
 
   /** Whether chain supports ability to get a publicKey from a signature */
   supportsGetPublicKeyFromSignature = false
+
+  /** Whether the chain supports resources */
+  supportsResources = false
 
   /** Verify that a 'personal message' was signed using the given key (Algorand does not append additional fields for a message) */
   verifySignedMessage = algoCrypto.verifySignedMessage

@@ -6,8 +6,9 @@
 /* eslint-disable no-console */
 // import { ChainFactory, ChainType } from '../../../index'
 // import { ChainEndpoint } from '../../../models'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chain-js'
+import { Models, Helpers, PluginChainFactory } from '@open-rights-exchange/chain-js'
 import { toAlgorandPrivateKey, toAlgorandPublicKey } from '../helpers'
+import ChainAlgorandV1  from '../ChainAlgorandV1'
 
 
 require('dotenv').config()
@@ -50,7 +51,7 @@ export const createMultiSigAccountOptions = {
 
 async function run() {
   /** Create Algorand chain instance */
-  const algoTest = new ChainFactory().create(Models.ChainType.AlgorandV1, algoTestnetEndpoints)
+  const algoTest = PluginChainFactory([ChainAlgorandV1], Models.ChainType.AlgorandV1, algoTestnetEndpoints)
   await algoTest.connect()
   if (algoTest.isConnected) {
     console.log('Connected to %o', algoTest.chainId)

@@ -257,7 +257,7 @@ export class AlgorandActionHelper {
     return params
   }
 
-  /** Adds the latest transaction header fields (firstRound, etc.) from chain
+ /** Adds the latest transaction header fields (firstRound, etc.) from chain
    *  Applies any that are not already provided in the action */
   applyCurrentTxHeaderParamsWhereNeeded(
     chainTxParams: AlgorandChainTransactionParamsStruct,

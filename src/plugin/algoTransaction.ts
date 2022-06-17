@@ -4,16 +4,7 @@ import * as algosdk from 'algosdk'
 import { Transaction as AlgoTransactionClass, TransactionLike } from 'algosdk'
 // import { Transaction } from '../../interfaces'
 // import { ChainErrorType, ChainSettingsCommunicationSettings, ConfirmType, TxExecutionPriority } from '../../models'
-import {
-  Models,
-  ChainFactory,
-  Helpers,
-  Chain,
-  ChainJsPlugin,
-  Crypto,
-  Errors,
-  Interfaces,
-} from '@open-rights-exchange/chain-js'
+import { Models, Helpers, Errors, Interfaces } from '@open-rights-exchange/chain-js'
 import { mapChainError } from './algoErrors'
 // import { throwNewError } from '../../errors'
 // import {
@@ -42,7 +33,6 @@ import {
   AlgorandTxActionSdkEncoded,
   AlgorandTxHeaderParams,
   AlgorandTxSignResults,
-  AlgorandTransactionResources,
   AlgorandMultiSignatureMsigStruct,
 } from './models'
 import { AlgorandActionHelper } from './algoAction'
@@ -70,7 +60,11 @@ import {
   getAlgorandPublicKeyFromPrivateKey,
   verifySignedWithPublicKey as verifySignatureForDataAndPublicKey,
 } from './algoCrypto'
-import { MINIMUM_TRANSACTION_FEE_FALLBACK, TRANSACTION_FEE_PRIORITY_MULTIPLIERS } from './algoConstants'
+import {
+  ALGORAND_TRANSACTION_EXPIRATION_OPTIONS,
+  MINIMUM_TRANSACTION_FEE_FALLBACK,
+  TRANSACTION_FEE_PRIORITY_MULTIPLIERS,
+} from './algoConstants'
 
 export class AlgorandTransaction implements Interfaces.Transaction {
   private _actionHelper: AlgorandActionHelper
@@ -310,6 +304,11 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     this.actions = [action]
   }
 
+  public async assertTransactionNotExpired(): Promise<void> {
+    const hasExpired = await this._chainState.isTransactionExpired(this.rawTransaction)
+    if (hasExpired) Errors.throwNewError('Transaction has expired!')
+  }
+
   // validation
 
   /** Verifies that raw trx exists
@@ -317,6 +316,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   public async validate(): Promise<void> {
     this.assertHasAction()
     this.assertHasRaw()
+    await this.assertTransactionNotExpired()
     if (this.isMultisig) {
       this.assertMultisigFromMatchesOptions(this.actions[0])
     }
@@ -786,8 +786,18 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return true
   }
 
+  /** Algorand does not require chain resources for a transaction */
+  public get supportsResources(): boolean {
+    return false
+  }
+
+  /** Algorand transactions do not require chain resources */
+  public async resourcesRequired(): Promise<Models.TransactionResources> {
+    Helpers.notSupported('Algorand does not require transaction resources')
+  }
+
   /** Returns Algorand specific transaction resource unit (bytes) */
-  public async resourcesRequired(): Promise<AlgorandTransactionResources> {
+  async cost(): Promise<{ bytes: number }> {
     const bytes = this.algoSdkTransaction?.estimateSize()
     return { bytes }
   }
@@ -814,7 +824,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   /** Returns transaction fee in units of microalgos (expressed as a string) */
   public async getSuggestedFee(priority: Models.TxExecutionPriority): Promise<string> {
     try {
-      const { bytes } = await this.resourcesRequired()
+      const { bytes } = await this.cost()
       const { suggestedFeePerByte } = this._chainState
       let microalgos = bytes * suggestedFeePerByte * TRANSACTION_FEE_PRIORITY_MULTIPLIERS[priority]
       if (microalgos === 0) microalgos = this._chainState.minimumFeePerTx || MINIMUM_TRANSACTION_FEE_FALLBACK

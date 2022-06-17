@@ -11,7 +11,7 @@ export const ALGORAND_EMPTY_CONTRACT_NAME = 'none'
 export const ALGORAND_POST_CONTENT_TYPE = {
   'content-type': 'application/x-binary',
 }
-/** Default number of rounds before transaction expires */
+/** Number of rounds a transction may be valid for (after which it expires) */
 export const ALGORAND_DEFAULT_TRANSACTION_VALID_BLOCKS = 1000
 export const DEFAULT_TIMEOUT_FOR_TRX_CONFIRM = 500
 export const DEFAULT_ALGO_UNIT = AlgorandUnit.Microalgo
@@ -44,4 +44,12 @@ export const TRANSACTION_FEE_PRIORITY_MULTIPLIERS: Models.IndexedObject = {
   slow: 0,
   average: 1,
   fast: 1.2,
+}
+
+/** Transaction expiration constraints */
+export const ALGORAND_TRANSACTION_EXPIRATION_OPTIONS: Models.TransactionExpirationOptions = {
+  /** Type of expiration constraint */
+  transactionsExpirationType: Models.TransactionExpirationType.Window,
+  /** the maximum width between the start block and end block (in seconds) */
+  maxWindowSeconds: Math.floor(ALGORAND_DEFAULT_TRANSACTION_VALID_BLOCKS * ALGORAND_CHAIN_BLOCK_FREQUENCY),
 }

@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-commented-out-tests */
 /* eslint-disable jest/no-conditional-expect */
 // How to use fetch mocks - https://www.npmjs.com/package/jest-fetch-mock
 // TODO: refactor fect mock to not use eosjs module

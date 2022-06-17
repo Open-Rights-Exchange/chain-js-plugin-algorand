@@ -7,7 +7,7 @@
 
 // import { ChainFactory, ChainType } from '../../../index'
 // import { ChainEndpoint, ChainActionType, TxExecutionPriority, ConfirmType } from '../../../models'
-import { Models, ChainFactory, Helpers } from '@open-rights-exchange/chain-js'
+import { Models, Helpers, PluginChainFactory } from '@open-rights-exchange/chain-js'
 import { AlgorandAddress, AlgorandUnit, AlgorandValue } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
 import { AlgorandTransaction } from '../algoTransaction'
@@ -65,7 +65,7 @@ const rawTransactionType2 = // has serialized UInt8Array
 async function run() {
   /** Create Algorand chain instance */
   const chainSettings = { defaultTransactionSettings: { expireSeconds: 100 } } // optional setting
-  const algoTest = new ChainFactory().create(Models.ChainType.AlgorandV1, algoTestnetEndpoints, chainSettings)
+  const algoTest = PluginChainFactory([ChainAlgorandV1], Models.ChainType.AlgorandV1, algoTestnetEndpoints, chainSettings)
   await algoTest.connect()
   if (algoTest.isConnected) {
     console.log('Connected to %o', algoTest.chainId)

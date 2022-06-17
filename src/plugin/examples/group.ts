@@ -7,7 +7,7 @@
 
 import * as algosdk from 'algosdk'
 // import { ChainFactory, ChainType } from '../../../index'
-import { ChainFactory, ChainType } from '@open-rights-exchange/chain-js'
+import { ChainType, Models, PluginChainFactory } from '@open-rights-exchange/chain-js'
 import { AlgorandTransactionOptions } from '../models'
 import { toAlgorandPrivateKey } from '../helpers'
 import { AlgorandTransaction } from '..'
@@ -51,25 +51,41 @@ const payTx2 = {
   type: 'pay',
 }
 
-
 async function run() {
   /** Create Algorand chain instance */
-  const algoBeta = new ChainFactory().create(ChainType.AlgorandV1, algoBetanetEndpoints) as ChainAlgorandV1
+  const algoBeta = PluginChainFactory(
+    [ChainAlgorandV1],
+    Models.ChainType.AlgorandV1,
+    algoBetanetEndpoints,
+  ) as ChainAlgorandV1
   await algoBeta.connect()
   if (algoBeta.isConnected) {
     console.log('Connected to %o', algoBeta.chainId)
   }
 
-  const options: AlgorandTransactionOptions = { 
+  const options: AlgorandTransactionOptions = {
     expireSeconds: 3600, // tx only valid for the next hour
   }
-
 
   const suggestedParams = await algoBeta.algoClient.getTransactionParams().do()
 
   // calculate groupID to attach into setTransaction()
-  const algoTrx1 = algosdk.makePaymentTxnWithSuggestedParams(payTx1.from, payTx1.to, payTx1.amount, undefined, undefined, suggestedParams)
-  const algoTrx2 = algosdk.makePaymentTxnWithSuggestedParams(payTx2.from, payTx2.to, payTx2.amount, undefined, undefined, suggestedParams)
+  const algoTrx1 = algosdk.makePaymentTxnWithSuggestedParams(
+    payTx1.from,
+    payTx1.to,
+    payTx1.amount,
+    undefined,
+    undefined,
+    suggestedParams,
+  )
+  const algoTrx2 = algosdk.makePaymentTxnWithSuggestedParams(
+    payTx2.from,
+    payTx2.to,
+    payTx2.amount,
+    undefined,
+    undefined,
+    suggestedParams,
+  )
   const group = Buffer.from(algosdk.computeGroupID([algoTrx1, algoTrx2])).toString('base64')
 
   const payTxWithHeaders1 = {
@@ -84,8 +100,8 @@ async function run() {
   }
 
   /** Compose and send transaction */
-  const transaction1 = await algoBeta.new.Transaction(options) as AlgorandTransaction
-  const transaction2 = await algoBeta.new.Transaction(options) as AlgorandTransaction
+  const transaction1 = (await algoBeta.new.Transaction(options)) as AlgorandTransaction
+  const transaction2 = (await algoBeta.new.Transaction(options)) as AlgorandTransaction
 
   await transaction1.setTransaction(payTxWithHeaders1)
   await transaction2.setTransaction(payTxWithHeaders2)
@@ -103,8 +119,11 @@ async function run() {
 
   const signedTransaction1 = new Uint8Array(algosdk.encodeObj(transaction1.rawTransaction))
   const signedTransaction2 = new Uint8Array(algosdk.encodeObj(transaction2.rawTransaction))
-  
-  console.log('send response: %o', JSON.stringify(await algoBeta.algoClient.sendRawTransaction([signedTransaction1, signedTransaction2]).do()))
+
+  console.log(
+    'send response: %o',
+    JSON.stringify(await algoBeta.algoClient.sendRawTransaction([signedTransaction1, signedTransaction2]).do()),
+  )
   // Sample group trx: https://betanet.algoexplorer.io/tx/group/JwuHTCKow8hslOIf9tSHcoVS2AdSLM0jvzW5WfFI6oo%3D
 }
 
