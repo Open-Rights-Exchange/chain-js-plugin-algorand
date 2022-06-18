@@ -821,12 +821,21 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return toAlgorandSignature(value)
   }
 
+  /** Gets fee multiplier data from the transaction options */
+  get feeMultiplier(): Models.IndexedObject {
+    const { feeMultiplier } = this.options
+    const multipliers: Models.IndexedObject = feeMultiplier
+      ? { ...feeMultiplier }
+      : TRANSACTION_FEE_PRIORITY_MULTIPLIERS
+    return multipliers
+  }
+
   /** Returns transaction fee in units of microalgos (expressed as a string) */
   public async getSuggestedFee(priority: Models.TxExecutionPriority): Promise<string> {
     try {
       const { bytes } = await this.cost()
       const { suggestedFeePerByte } = this._chainState
-      let microalgos = bytes * suggestedFeePerByte * TRANSACTION_FEE_PRIORITY_MULTIPLIERS[priority]
+      let microalgos = bytes * suggestedFeePerByte * this.feeMultiplier[priority]
       if (microalgos === 0) microalgos = this._chainState.minimumFeePerTx || MINIMUM_TRANSACTION_FEE_FALLBACK
       return microToAlgoString(microalgos)
     } catch (error) {
