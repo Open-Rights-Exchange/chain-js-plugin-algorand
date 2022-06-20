@@ -822,9 +822,9 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   }
 
   /** Gets fee multiplier data from the transaction options */
-  get feeMultiplier(): Models.IndexedObject {
+  get feeMultiplier() {
     const { feeMultiplier } = this.options
-    const multipliers: Models.IndexedObject = feeMultiplier
+    const multipliers = feeMultiplier
       ? { ...feeMultiplier }
       : TRANSACTION_FEE_PRIORITY_MULTIPLIERS
     return multipliers
