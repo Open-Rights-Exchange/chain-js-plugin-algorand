@@ -70,7 +70,8 @@ export type AlgorandTransactionOptions = {
   /** (optional) The publicKey used to sign the transaction - if an account has been rekeyed, use the signing key here
    * if not provided, defaults to 'from' address's publicKey */
   signerPublicKey?: AlgorandPublicKey
-  feeMultiplier?: Models.TransactionFeePriorityMultipliers
+  /** scalar values to multiply suggested fee by by priority */
+  feeMultipliers?: Models.TransactionFeePriorityMultipliers
 }
 
 /** Raw transaction ready to be signed */
