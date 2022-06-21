@@ -40,16 +40,16 @@ export const MINIMUM_TRANSACTION_FEE_FALLBACK = 1000
  *  Average ->  suggested fee per byte from chainState
  *  Fast -> multiply suggested fee by 1.2 - as per recommendation from Algorand Foundation
  */
-export const TRANSACTION_FEE_PRIORITY_MULTIPLIERS: Models.IndexedObject = {
-  slow: 0,
-  average: 1,
-  fast: 1.2,
+export const TRANSACTION_FEE_PRIORITY_MULTIPLIERS: Models.TransactionFeePriorityMultipliers = {
+  [Models.TxExecutionPriority.Slow]: 0,
+  [Models.TxExecutionPriority.Average]: 1,
+  [Models.TxExecutionPriority.Fast]: 1.2,
 }
 
 /** Transaction expiration constraints */
 export const ALGORAND_TRANSACTION_EXPIRATION_OPTIONS: Models.TransactionExpirationOptions = {
   /** Type of expiration constraint */
-  transactionsExpirationType: Models.TransactionExpirationType.Window,
+  transactionExpirationType: Models.TransactionExpirationType.Window,
   /** the maximum width between the start block and end block (in seconds) */
   maxWindowSeconds: Math.floor(ALGORAND_DEFAULT_TRANSACTION_VALID_BLOCKS * ALGORAND_CHAIN_BLOCK_FREQUENCY),
 }

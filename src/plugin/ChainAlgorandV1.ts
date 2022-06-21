@@ -217,6 +217,9 @@ class Plugin implements Chain {
   /** Signs data as a message using private key (Algorand does not append additional fields for a message) */
   signMessage = algoCrypto.signMessage
 
+  /** Whether the chain supports resources */
+  supportsFee = true
+
   /** Whether chain supports ability to get a publicKey from a signature */
   supportsGetPublicKeyFromSignature = false
 

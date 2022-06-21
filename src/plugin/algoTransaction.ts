@@ -60,11 +60,7 @@ import {
   getAlgorandPublicKeyFromPrivateKey,
   verifySignedWithPublicKey as verifySignatureForDataAndPublicKey,
 } from './algoCrypto'
-import {
-  ALGORAND_TRANSACTION_EXPIRATION_OPTIONS,
-  MINIMUM_TRANSACTION_FEE_FALLBACK,
-  TRANSACTION_FEE_PRIORITY_MULTIPLIERS,
-} from './algoConstants'
+import { MINIMUM_TRANSACTION_FEE_FALLBACK, TRANSACTION_FEE_PRIORITY_MULTIPLIERS } from './algoConstants'
 
 export class AlgorandTransaction implements Interfaces.Transaction {
   private _actionHelper: AlgorandActionHelper
@@ -782,10 +778,6 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return false
   }
 
-  public get supportsFee() {
-    return true
-  }
-
   /** Algorand does not require chain resources for a transaction */
   public get supportsResources(): boolean {
     return false
@@ -794,6 +786,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   /** Algorand transactions do not require chain resources */
   public async resourcesRequired(): Promise<Models.TransactionResources> {
     Helpers.notSupported('Algorand does not require transaction resources')
+    return null // quiets linter
   }
 
   /** Returns Algorand specific transaction resource unit (bytes) */
@@ -821,12 +814,19 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return toAlgorandSignature(value)
   }
 
+  /** Fee multipliers effective for this transaction - uses default values if not set via transaction options  */
+  get feeMultipliers() {
+    const { feeMultipliers: feeMultiplier } = this.options
+    const multipliers = feeMultiplier ? { ...feeMultiplier } : TRANSACTION_FEE_PRIORITY_MULTIPLIERS
+    return multipliers
+  }
+
   /** Returns transaction fee in units of microalgos (expressed as a string) */
   public async getSuggestedFee(priority: Models.TxExecutionPriority): Promise<string> {
     try {
       const { bytes } = await this.cost()
       const { suggestedFeePerByte } = this._chainState
-      let microalgos = bytes * suggestedFeePerByte * TRANSACTION_FEE_PRIORITY_MULTIPLIERS[priority]
+      let microalgos = bytes * suggestedFeePerByte * this.feeMultipliers[priority]
       if (microalgos === 0) microalgos = this._chainState.minimumFeePerTx || MINIMUM_TRANSACTION_FEE_FALLBACK
       return microToAlgoString(microalgos)
     } catch (error) {
