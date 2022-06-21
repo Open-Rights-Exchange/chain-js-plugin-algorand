@@ -778,10 +778,6 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return false
   }
 
-  public get supportsFee() {
-    return true
-  }
-
   /** Algorand does not require chain resources for a transaction */
   public get supportsResources(): boolean {
     return false
