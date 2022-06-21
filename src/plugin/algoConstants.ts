@@ -49,7 +49,7 @@ export const TRANSACTION_FEE_PRIORITY_MULTIPLIERS: Models.TransactionFeePriority
 /** Transaction expiration constraints */
 export const ALGORAND_TRANSACTION_EXPIRATION_OPTIONS: Models.TransactionExpirationOptions = {
   /** Type of expiration constraint */
-  transactionsExpirationType: Models.TransactionExpirationType.Window,
+  transactionExpirationType: Models.TransactionExpirationType.Window,
   /** the maximum width between the start block and end block (in seconds) */
   maxWindowSeconds: Math.floor(ALGORAND_DEFAULT_TRANSACTION_VALID_BLOCKS * ALGORAND_CHAIN_BLOCK_FREQUENCY),
 }
