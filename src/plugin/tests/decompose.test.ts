@@ -35,6 +35,7 @@ import {
 
 describe('Decompose Algorand Chain Actions', () => {
   it('decomposes asset create action object', async () => {
+    // ! Moved to file asset_create.spec.ts
     const actAction = await decomposeAction(JSON.parse(composedAssetCreate))
     expect(actAction).toEqual(decomposedAssetCreate)
   })
