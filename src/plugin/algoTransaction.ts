@@ -83,6 +83,8 @@ export class AlgorandTransaction implements Interfaces.Transaction {
 
   private _isValidated: boolean
 
+  private _actualCost: Models.ActualCost
+
   constructor(chainState: AlgorandChainState, options?: AlgorandTransactionOptions) {
     this._chainState = chainState
     this.assertValidOptions(options)
@@ -835,10 +837,13 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     }
   }
 
-  /** Returns the actual cost of executing the transaction in units of Algos (expressed as a string)
-   * Throws if transaction not found on-chain */
-  public async getActualCost(): Promise<string> {
+  /** Returns the actual cost of executing the transaction in units of Algos */
+  public get actualCost(): Models.ActualCost {
+    return this._actualCost
+  }
+
+  public async setActualCost() {
     const trx = await this._chainState.getTransactionById(this.transactionId)
-    return trx ? microToAlgoString(trx?.fee) : null
+    if (trx) this._actualCost = { fee: microToAlgoString(trx?.fee) }
   }
 }
