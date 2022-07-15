@@ -631,14 +631,18 @@ export class AlgorandTransaction implements Interfaces.Transaction {
 
   /** Broadcast a signed transaction to the chain
    *  waitForConfirm specifies whether to wait for a transaction to appear in a block before returning */
-  public send(
+  public async send(
     waitForConfirm: Models.ConfirmType = Models.ConfirmType.None,
     communicationSettings?: Models.ChainSettingsCommunicationSettings,
   ): Promise<any> {
     this.assertIsValidated()
     this.assertHasAllRequiredSignature()
     const signedTransaction = Helpers.byteArrayToHexString(new Uint8Array(algosdk.encodeObj(this.rawTransaction)))
-    return this._chainState.sendTransaction(signedTransaction, waitForConfirm, communicationSettings)
+    const result = await this._chainState.sendTransaction(signedTransaction, waitForConfirm, communicationSettings)
+    if (waitForConfirm !== Models.ConfirmType.None) {
+      await this.setActualCost()
+    }
+    return result
   }
 
   // helpers
@@ -843,7 +847,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   }
 
   public async setActualCost() {
-    const trx = await this._chainState.getTransactionById(this.transactionId)
-    if (trx) this._actualCost = { fee: microToAlgoString(trx?.fee) }
+    const { transaction } = await this._chainState.getTransactionById(this.transactionId)
+    if (transaction) this._actualCost = { fee: microToAlgoString(transaction?.fee) }
   }
 }
