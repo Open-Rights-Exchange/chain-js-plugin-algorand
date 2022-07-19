@@ -846,7 +846,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return this._actualCost
   }
 
-  public async setActualCost() {
+  private async setActualCost() {
     const { transaction } = await this._chainState.getTransactionById(this.transactionId)
     if (transaction) this._actualCost = { fee: microToAlgoString(transaction?.fee) }
   }
