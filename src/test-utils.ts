@@ -53,3 +53,12 @@ export const composeActionTest = async (args: any): Promise<[any, any]> => {
 
   return [actionHelper.paramsOnly, actionHelper.transactionHeaderParams]
 }
+
+export const getDefaultTransactionHeaderParams = (): any => ({
+  genesisID: 'testnet-v1.0',
+  genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+  firstRound: 22827835,
+  lastRound: 22828835,
+  fee: 1000,
+  flatFee: true,
+})
