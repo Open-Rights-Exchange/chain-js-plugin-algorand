@@ -38,6 +38,7 @@ import { AlgorandChainState } from '../algoChainState'
 describe('Compose Algorand Chain Actions', () => {
   let chainState: AlgorandChainState
   it('creates asset create action object', async () => {
+    // ! Moved to file asset_create.spec.ts
     const args: AlgorandActionAssetCreateParams = {
       from: 'VBS2IRDUN2E7FJGYEKQXUAQX3XWL6UNBJZZJHB7CJDMWHUKXAGSHU5NXNQ',
       note: 'create',
@@ -64,6 +65,7 @@ describe('Compose Algorand Chain Actions', () => {
   })
 
   it('creates asset config action object', async () => {
+    // ! Moved to file
     const args: AlgorandActionAssetConfigParams = {
       from: 'VBS2IRDUN2E7FJGYEKQXUAQX3XWL6UNBJZZJHB7CJDMWHUKXAGSHU5NXNQ',
       note: 'create',

@@ -3,6 +3,8 @@
 // How to use fetch mocks - https://www.npmjs.com/package/jest-fetch-mock
 // TODO: refactor fect mock to not use eosjs module
 
+global.fetch = require('jest-fetch-mock')
+
 // import { JsonRpc } from 'eosjs' // No idea why we need eosjs in an Algo test?
 
 // import { Models, Errors } from '@open-rights-exchange/chain-js'
