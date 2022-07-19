@@ -78,12 +78,3 @@ test('Compose and Decompose AssetCreate', async () => {
   const { assetDecimals, totalIssuance, ...expectedDecomposedArgs } = getDefaultArgs()
   expect(decomposedArgs).toEqual(expectedDecomposedArgs)
 })
-
-test('Compose AssetCreate return null ir args is invalid', async () => {
-  const args = getDefaultArgs()
-  const { ...invalid } = args
-
-  const options = getDefaultTransactionHeaderParams()
-  const actAction = await composeAction(args, options)
-  expect(actAction).toBeNull()
-})
