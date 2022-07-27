@@ -270,7 +270,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     )[],
   ) {
     this.assertNoSignatures()
-    if (Helpers.isNullOrEmpty(actions)) {
+    if (Helpers.isNullOrEmpty(actions) || Helpers.isNullOrEmpty(actions[0])) {
       this._actionHelper = null
       this._algoSdkTransaction = null
       this._isValidated = false
@@ -539,7 +539,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     // Or if the option.signerPublicKey was specified, we'll return that (used to specify a key for rekeyed accounts)
     if (this.options.signerPublicKey) return this.options.signerPublicKey
     // Otherwise, we'll assume its the publickey of the from address
-    return this.action.from ? toPublicKeyFromAddress(this.action.from) : null
+    return this.action?.from ? toPublicKeyFromAddress(this.action.from) : null
   }
 
   /** Returns array of the required addresses for a transaction/multisig transaction
@@ -691,7 +691,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
 
   /** Whether action.from is a valid address (and not null or empty) */
   private isFromAValidAddress(): boolean {
-    return isValidAlgorandAddress(this?.action?.from)
+    return isValidAlgorandAddress(this.action?.from)
   }
 
   /** Throws if from is not null or empty algorand argument */
