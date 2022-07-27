@@ -270,7 +270,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     )[],
   ) {
     this.assertNoSignatures()
-    if (Helpers.isNullOrEmpty(actions)) {
+    if (Helpers.isNullOrEmpty(actions) || Helpers.isNullOrEmpty(actions[0])) {
       this._actionHelper = null
       this._algoSdkTransaction = null
       this._isValidated = false
