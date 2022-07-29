@@ -12,10 +12,11 @@ import {
   AlgorandRawTransactionMultisigStruct,
 } from './models'
 import {
+  ALGORAND_CHAIN_BLOCK_FREQUENCY,
   ALGORAND_POST_CONTENT_TYPE,
   DEFAULT_BLOCKS_TO_CHECK,
-  DEFAULT_GET_BLOCK_ATTEMPTS,
   DEFAULT_CHECK_INTERVAL,
+  DEFAULT_GET_BLOCK_ATTEMPTS,
   MINIMUM_CHECK_INTERVAL,
   NATIVE_CHAIN_TOKEN_SYMBOL,
 } from './algoConstants'
@@ -557,13 +558,11 @@ export class AlgorandChainState implements Interfaces.ChainState {
     return checkInterval
   }
 
-  public async isTransactionExpired(
-    transaction: AlgorandRawTransactionStruct | AlgorandRawTransactionMultisigStruct,
-  ): Promise<boolean> {
-    const { txn } = transaction
-    const { lv: lastRound } = txn
-    const { headBlockNumber } = await this.getChainInfo()
-    if (headBlockNumber > lastRound) return true
-    return false
+  /** calculates the Date and time of a block number for the connected chain */
+  public determineBlockDateTime(blockNumber: number) {
+    this.assertIsConnected()
+    const blocksInFuture = blockNumber - this._chainInfo.headBlockNumber
+    const secondsTillblock = blocksInFuture * ALGORAND_CHAIN_BLOCK_FREQUENCY
+    return new Date(Date.now() + secondsTillblock * 1000)
   }
 }

@@ -280,7 +280,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
       Errors.throwNewError('Algorand transaction.actions only accepts an array of exactly 1 action')
     }
     const action = actions[0]
-    this.assertMultisigFromMatchesOptions(action)
+    this.assertMultisigFromMatchesOptions(action)  // TODO: consider if this should be moved below after this.setAlgoSdkTransactionFromAction()
     this._actionHelper = new AlgorandActionHelper(action)
     this.setAlgoSdkTransactionFromAction()
     this._isValidated = false
@@ -302,9 +302,31 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     this.actions = [action]
   }
 
+  /** Throws if transaction has expired */
   public async assertTransactionNotExpired(): Promise<void> {
-    const hasExpired = await this._chainState.isTransactionExpired(this.rawTransaction)
+    const hasExpired = await this.isExpired()
     if (hasExpired) Errors.throwNewError('Transaction has expired!')
+  }
+
+  /** Whether transaction is expired */
+  public async isExpired(): Promise<boolean> {
+    const { txn } = this.rawTransaction
+    const { lv: lastRound } = txn
+    const { headBlockNumber } = await this._chainState.getChainInfo()
+    if (headBlockNumber > lastRound) return true
+    return false
+  }
+
+  /** Date (and time) when transaction can first be sent to the chain (before which the transaction will fail) */
+  public async validOn(): Promise<Date> {
+    this.assertHasRaw()
+    return this._chainState.determineBlockDateTime(this._actionHelper.transactionHeaderParams.firstRound)
+  }
+
+  /** Date (and time) when transaction expires */
+  public async expiresOn(): Promise<Date> {
+    this.assertHasRaw()
+    return this._chainState.determineBlockDateTime(this._actionHelper.transactionHeaderParams.lastRound)
   }
 
   // validation
