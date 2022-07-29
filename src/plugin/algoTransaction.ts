@@ -280,7 +280,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
       Errors.throwNewError('Algorand transaction.actions only accepts an array of exactly 1 action')
     }
     const action = actions[0]
-    this.assertMultisigFromMatchesOptions(action)  // TODO: consider if this should be moved below after this.setAlgoSdkTransactionFromAction()
+    this.assertMultisigFromMatchesOptions(action) // TODO: consider if this should be moved below after this.setAlgoSdkTransactionFromAction()
     this._actionHelper = new AlgorandActionHelper(action)
     this.setAlgoSdkTransactionFromAction()
     this._isValidated = false
