@@ -841,7 +841,7 @@ export class AlgorandTransaction implements Interfaces.Transaction {
       }
       if (!Helpers.isAString(desiredFeeJson?.fee)) {
         throw new Error(
-          `desiredFeeStringified invalid: Expected stringified object of type: { fee: '.01' } where string value is in Algos`,
+          'desiredFeeStringified invalid: Expected stringified object of type: { fee: ".01" } where string value is in Algos',
         )
       }
       const fee = algoToMicro(desiredFeeJson.fee)
