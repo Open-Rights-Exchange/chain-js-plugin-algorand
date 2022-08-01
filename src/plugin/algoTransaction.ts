@@ -21,19 +21,20 @@ import { AlgorandChainState } from './algoChainState'
 import {
   AlgorandAddress,
   AlgorandMultisigOptions,
+  AlgorandMultiSignatureMsigStruct,
   AlgorandMultiSignatureStruct,
   AlgorandPrivateKey,
   AlgorandPublicKey,
   AlgorandRawTransactionMultisigStruct,
   AlgorandRawTransactionStruct,
   AlgorandSignature,
+  AlgorandTransactionFee,
   AlgorandTransactionOptions,
   AlgorandTxAction,
   AlgorandTxActionRaw,
   AlgorandTxActionSdkEncoded,
   AlgorandTxHeaderParams,
   AlgorandTxSignResults,
-  AlgorandMultiSignatureMsigStruct,
 } from './models'
 import { AlgorandActionHelper } from './algoAction'
 import {
@@ -823,18 +824,34 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     return { bytes }
   }
 
-  /** Sets transaction fee propert as flatfee
-   *  desiredFee units is in algos (expressed as a string)
+  /** Sets transaction fee property as flatfee
+   *  desiredFeeStringified is stringified JSON object object of type: { fee: '.01' } where string value is in Algos
+   *  clear fees by passing in desiredFeeStringified = null
    */
-  public async setDesiredFee(desiredFee: string) {
+  public async setDesiredFee(desiredFeeStringified: string) {
     this.assertHasAction()
-    const fee = algoToMicro(desiredFee)
-    const trx: AlgorandTxAction = {
-      ...this._actionHelper.action,
-      fee,
-      flatFee: true,
+    try {
+      const trx: AlgorandTxAction = { ...this._actionHelper.action }
+      const desiredFeeJson = Helpers.tryParseJSON(desiredFeeStringified) as AlgorandTransactionFee
+      // clear fee
+      if (!desiredFeeJson || desiredFeeJson?.fee === null) {
+        trx.fee = null
+        trx.flatFee = false
+        return
+      }
+      if (!Helpers.isAString(desiredFeeJson?.fee)) {
+        throw new Error(
+          'desiredFeeStringified invalid: Expected stringified object of type: { fee: ".01" } where string value is in Algos',
+        )
+      }
+      const fee = algoToMicro(desiredFeeJson.fee)
+      trx.fee = fee
+      trx.flatFee = true
+      this.actions = [trx]
+    } catch (error) {
+      const chainError = mapChainError(error)
+      throw chainError
     }
-    this.actions = [trx]
   }
 
   /** Ensures that the value comforms to a well-formed EOS signature */
@@ -850,13 +867,16 @@ export class AlgorandTransaction implements Interfaces.Transaction {
   }
 
   /** Returns transaction fee in units of microalgos (expressed as a string) */
-  public async getSuggestedFee(priority: Models.TxExecutionPriority): Promise<string> {
+  public async getSuggestedFee(
+    priority: Models.TxExecutionPriority,
+  ): Promise<{ estimationType: Models.ResourceEstimationType; feeStringified: string }> {
     try {
       const { bytes } = await this.cost()
       const { suggestedFeePerByte } = this._chainState
       let microalgos = bytes * suggestedFeePerByte * this.feeMultipliers[priority]
       if (microalgos === 0) microalgos = this._chainState.minimumFeePerTx || MINIMUM_TRANSACTION_FEE_FALLBACK
-      return microToAlgoString(microalgos)
+      const feeStringified = JSON.stringify({ fee: microToAlgoString(microalgos) })
+      return { estimationType: Models.ResourceEstimationType.Exact, feeStringified }
     } catch (error) {
       const chainError = mapChainError(error)
       throw chainError

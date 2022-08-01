@@ -35,6 +35,12 @@ export type AlgorandTxResult = {
   chainResponse?: AlgorandTxChainResponse
 }
 
+/** Cost in Algos to run the transaction */
+export type AlgorandTransactionFee = {
+  /**  fee is a string value in units of Algos - e.g. { fee: '.01' } */
+  fee: string
+}
+
 /** Transaction properties that contain the genesis information and fee required to construct a transaction */
 export type AlgorandTxHeaderParams = {
   genesisID?: string // like genesisHash this is used to specify network to be used
