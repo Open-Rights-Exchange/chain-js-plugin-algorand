@@ -19,6 +19,7 @@ import { toAlgorandPrivateKey } from '../helpers'
 // import { toChainEntityName } from '../../../helpers'
 import { AlgorandActionHelper } from '../algoAction'
 import ChainAlgorandV1 from '../ChainAlgorandV1'
+import { AlgorandTransaction } from '../algoTransaction'
 
 require('dotenv').config()
 
@@ -155,6 +156,9 @@ async function run() {
   console.log('decomposed action: ', decomposed)
   await transaction.prepareToBeSigned()
   await transaction.validate()
+
+  console.log('tx from date:', (transaction as AlgorandTransaction).validOn())
+  console.log('tx expiresOn date:', (transaction as AlgorandTransaction).expiresOn())
 
   // const algoActionHelper = new AlgorandActionHelper(transaction.actions[0])
   // console.log('action sdkEncoded:', algoActionHelper.actionEncodedForSdk)
