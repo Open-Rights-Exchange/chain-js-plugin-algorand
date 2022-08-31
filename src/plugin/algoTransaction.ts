@@ -62,7 +62,6 @@ import {
   verifySignedWithPublicKey as verifySignatureForDataAndPublicKey,
 } from './algoCrypto'
 import { MINIMUM_TRANSACTION_FEE_FALLBACK, TRANSACTION_FEE_PRIORITY_MULTIPLIERS } from './algoConstants'
-import { isAString, tryParseJSON } from '../../../chain-js/src/helpers'
 
 export class AlgorandTransaction implements Interfaces.Transaction {
   private _actionHelper: AlgorandActionHelper
@@ -833,16 +832,16 @@ export class AlgorandTransaction implements Interfaces.Transaction {
     this.assertHasAction()
     try {
       const trx: AlgorandTxAction = { ...this._actionHelper.action }
-      const desiredFeeJson = tryParseJSON(desiredFeeStringified) as AlgorandTransactionFee
+      const desiredFeeJson = Helpers.tryParseJSON(desiredFeeStringified) as AlgorandTransactionFee
       // clear fee
       if (!desiredFeeJson || desiredFeeJson?.fee === null) {
         trx.fee = null
         trx.flatFee = false
         return
       }
-      if (!isAString(desiredFeeJson?.fee)) {
+      if (!Helpers.isAString(desiredFeeJson?.fee)) {
         throw new Error(
-          `desiredFeeStringified invalid: Expected stringified object of type: { fee: '.01' } where string value is in Algos`,
+          'desiredFeeStringified invalid: Expected stringified object of type: { fee: ".01" } where string value is in Algos',
         )
       }
       const fee = algoToMicro(desiredFeeJson.fee)

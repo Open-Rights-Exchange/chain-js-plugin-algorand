@@ -8,8 +8,6 @@ import {
   AlgorandTxChainResponse,
   AlgorandTxResult,
   AlgorandUnit,
-  AlgorandRawTransactionStruct,
-  AlgorandRawTransactionMultisigStruct,
 } from './models'
 import {
   ALGORAND_CHAIN_BLOCK_FREQUENCY,
