@@ -27,3 +27,8 @@ export type AlgoEncryptionOptions = Crypto.Ed25519Crypto.Ed25519PasswordEncrypti
 
 /** Additional parameters for encryption/decryption - for SHA256 algorithm */
 export type EncryptionOptions = AlgoEncryptionOptions
+
+/** An object containing the string message to sign */
+export type AlgoSignDataInput = {
+  stringToSign: string
+}

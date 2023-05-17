@@ -33,6 +33,7 @@ import {
   toAlgorandSignature,
 } from './helpers'
 import { AlgorandChainEndpoint, AlgorandChainInfo, AlgorandChainSettings } from './models/chainModels'
+import { AlgorandSignMessage } from './algoSignMessage'
 // import { Asymmetric } from '../../crypto'
 // import { ChainJsPlugin, ChainJsPluginOptions } from '../../interfaces/plugin'
 
@@ -123,6 +124,11 @@ class Plugin implements Chain {
     return transaction
   }
 
+  private newSignMessage = async (data: any, options?: any): Promise<AlgorandSignMessage> => {
+    const transaction = new AlgorandSignMessage(data, options)
+    return transaction
+  }
+
   public new = {
     /** Returns a new chain Account object
      * If an account name is provided, it will be fetched from the chain and loaded into the returned account object
@@ -132,6 +138,8 @@ class Plugin implements Chain {
     CreateAccount: this.newCreateAccount.bind(this),
     /** Return a chain Transaction object used to compose and send transactions */
     Transaction: this.newTransaction.bind(this),
+    /** Return a Signed Message object */
+    SignMessage: this.newSignMessage.bind(this),
   }
 
   // --------- Transaction functions */
@@ -225,6 +233,9 @@ class Plugin implements Chain {
 
   /** Whether the chain supports resources */
   supportsResources = false
+
+  /** Whether chain supports ability to get a publicKey from a signature */
+  supportsTypedDataSignature = false
 
   /** Verify that a 'personal message' was signed using the given key (Algorand does not append additional fields for a message) */
   verifySignedMessage = algoCrypto.verifySignedMessage
