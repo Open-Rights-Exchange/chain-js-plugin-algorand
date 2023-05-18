@@ -3,13 +3,14 @@ import { Interfaces, Models, Errors } from '@open-rights-exchange/chain-js'
 import {
   AlgoSignDataInput,
   AlgorandPrivateKey,
+  SignMethod,
 } from './models'
 import { sign } from "./algoCrypto"
 
 export class AlgorandSignMessage implements Interfaces.SignMessage {
-  constructor(data: any, options?: Models.SignMessageOptions ) {
+  constructor(message: AlgoSignDataInput, options?: Models.SignMessageOptions ) {
     this.applyOptions(options)
-    this.applyData(data)
+    this.applyMessage(message)
     this.setSignMethod()
     this._isValidated = false
   }
@@ -20,14 +21,14 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
 
   private _options: Models.SignMessageOptions
 
-  private _data: any
+  private _message: AlgoSignDataInput
 
   private applyOptions(options: Models.SignMessageOptions) {
-    this._options = options ? options : { signMethod: 'algorand-sign'}
+    this._options = options ? options : { signMethod: SignMethod.Default}
   }
 
-  private applyData(data: any) {
-    this._data = data
+  private applyMessage(message: any) {
+    this._message = message
   }
 
   /** Options provided when the SignMessage class was created */
@@ -36,8 +37,8 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
   }
 
   /** Date provided when the SignMessage class was created */
-  get data(): AlgoSignDataInput {
-    return this._data;
+  get message(): AlgoSignDataInput {
+    return this._message;
   }
 
   /* Set the signMethod and ensure that is lowercase */
@@ -50,7 +51,7 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
     return this._signMethod
   }
 
-  /** Whether data structure has been validated - via validate() */
+  /** Whether message structure has been validated - via validate() */
   get isValidated() {
     return this._isValidated
   }
@@ -58,10 +59,10 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
   /** Verifies that the structure of the signature request is valid.
    *  Throws if any problems */
   public async validate(): Promise<Models.SignMessageValidateResult> {
-    if (this.signMethod !== 'algorand-sign') {
+    if (this.signMethod !== SignMethod.Default) {
       Errors.throwNewError(`signMethod not recognized. signMethod provided = ${this.signMethod}`)
     }
-    const isValid = this.validateAlgoSignInput(this.data).valid
+    const isValid = this.validateAlgoSignInput(this.message).valid
     this._isValidated = isValid
     return  {
       valid: isValid
@@ -124,7 +125,7 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
     let result: Models.SignMessageResult
     try {
       const privateKey = privateKeys[0]
-      const signature = sign (this.data.stringToSign, privateKey)
+      const signature = sign (this.message.stringToSign, privateKey)
       result = {
         signature,
       }

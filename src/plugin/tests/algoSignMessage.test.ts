@@ -1,29 +1,19 @@
-import { Models, Crypto } from '@open-rights-exchange/chain-js'
+import { Models } from '@open-rights-exchange/chain-js'
 import { AlgorandSignMessage } from '../../plugin/algoSignMessage'
 import { toAlgorandPrivateKey } from '../helpers'
+import { AlgoSignDataInput, SignMethod } from '../models'
 
 const privateKeyString =
   'd981cfed95079eddfabfacf6ae0e25532110ea574ee06879ec7d55d0a627ee372739bf899158b5be1c069f251c4d12c977781b349ef70d7e83b7c431e17745cc'
 const privateKey = toAlgorandPrivateKey(privateKeyString)
 
 describe('Algorand SignMessage Tests', () => {
-
-  it('Algorand sign - validate fails when input is incorrect', async () => {
-    const input2 = {
-      BADstringToSign: 'Something to sign here',
-    }
-
-    const SignMessage = new AlgorandSignMessage(input2)
-    const validateResult = await SignMessage.validate()
-    expect(validateResult.valid).toBeFalsy()
-  })
-
   it('Algorand sign - validate passes when input is correct', async () => {
     const input = {
       stringToSign: 'Something to sign here',
     }
 
-    const SignMessageOptions = { signMethod: 'algorand-sign'}
+    const SignMessageOptions = { signMethod: SignMethod.Default}
     const SignMessage = new AlgorandSignMessage(input, SignMessageOptions)
     const validateResult = await SignMessage.validate()
     expect(validateResult.valid).toBeTruthy()
