@@ -124,7 +124,7 @@ class Plugin implements Chain {
     return transaction
   }
 
-  private newSignMessage = async (data: any, options?: any): Promise<AlgorandSignMessage> => {
+  private newSignMessage = async (data: string, options?: any): Promise<AlgorandSignMessage> => {
     const transaction = new AlgorandSignMessage(data, options)
     return transaction
   }

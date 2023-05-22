@@ -8,10 +8,10 @@ import {
 import { sign } from "./algoCrypto"
 
 export class AlgorandSignMessage implements Interfaces.SignMessage {
-  constructor(message: AlgoSignDataInput, options?: Models.SignMessageOptions ) {
+  constructor(message: string, options?: Models.SignMessageOptions ) {
     this.applyOptions(options)
-    this.applyMessage(message)
     this.setSignMethod()
+    this.applyMessage(message)
     this._isValidated = false
   }
 
@@ -21,13 +21,13 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
 
   private _options: Models.SignMessageOptions
 
-  private _message: AlgoSignDataInput
+  private _message: string
 
   private applyOptions(options: Models.SignMessageOptions) {
     this._options = options ? options : { signMethod: SignMethod.Default}
   }
 
-  private applyMessage(message: any) {
+  private applyMessage(message: string) {
     this._message = message
   }
 
@@ -38,7 +38,9 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
 
   /** Date provided when the SignMessage class was created */
   get message(): AlgoSignDataInput {
-    return this._message;
+    return {
+      stringToSign: this._message
+    }
   }
 
   /* Set the signMethod and ensure that is lowercase */

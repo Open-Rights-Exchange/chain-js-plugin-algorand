@@ -9,12 +9,9 @@ const privateKey = toAlgorandPrivateKey(privateKeyString)
 
 describe('Algorand SignMessage Tests', () => {
   it('Algorand sign - validate passes when input is correct', async () => {
-    const input = {
-      stringToSign: 'Something to sign here',
-    }
-
+    const stringToSign = 'Something to sign here'
     const SignMessageOptions = { signMethod: SignMethod.Default}
-    const SignMessage = new AlgorandSignMessage(input, SignMessageOptions)
+    const SignMessage = new AlgorandSignMessage(stringToSign, SignMessageOptions)
     const validateResult = await SignMessage.validate()
     expect(validateResult.valid).toBeTruthy()
 
@@ -25,10 +22,8 @@ describe('Algorand SignMessage Tests', () => {
   })
 
   it('Algorand validate - passes when input is correct and no options are provided', async () => {
-    const input = {
-      stringToSign: 'Something to sign here',
-    }
-    const SignMessage = new AlgorandSignMessage(input)
+    const stringToSign = 'Something to sign here'
+    const SignMessage = new AlgorandSignMessage(stringToSign)
     const validateResult = await SignMessage.validate()
     expect(validateResult.valid).toBeTruthy()
     const result = await SignMessage.sign([
