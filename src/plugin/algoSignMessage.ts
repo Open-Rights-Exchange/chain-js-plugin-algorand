@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Interfaces, Models, Errors } from '@open-rights-exchange/chain-js'
 import {
-  AlgoSignDataInput,
+  AlgorandSignDataInput,
   AlgorandPrivateKey,
-  SignMethod,
+  AlgorandSignMethod,
 } from './models'
 import { sign } from "./algoCrypto"
 
@@ -24,7 +24,7 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
   private _message: string
 
   private applyOptions(options: Models.SignMessageOptions) {
-    this._options = options ? options : { signMethod: SignMethod.Default}
+    this._options = options ? options : { signMethod: AlgorandSignMethod.Default}
   }
 
   private applyMessage(message: string) {
@@ -37,7 +37,7 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
   }
 
   /** Date provided when the SignMessage class was created */
-  get message(): AlgoSignDataInput {
+  get message(): AlgorandSignDataInput {
     return {
       stringToSign: this._message
     }
@@ -61,7 +61,7 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
   /** Verifies that the structure of the signature request is valid.
    *  Throws if any problems */
   public async validate(): Promise<Models.SignMessageValidateResult> {
-    if (this.signMethod !== SignMethod.Default) {
+    if (this.signMethod !== AlgorandSignMethod.Default) {
       Errors.throwNewError(`signMethod not recognized. signMethod provided = ${this.signMethod}`)
     }
     const isValid = this.validateAlgoSignInput(this.message).valid
@@ -78,7 +78,7 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
     }
   }
 
-  private validateAlgoSignInput(data: AlgoSignDataInput): Models.SignMessageValidateResult {
+  private validateAlgoSignInput(data: AlgorandSignDataInput): Models.SignMessageValidateResult {
     let result: Models.SignMessageValidateResult
   
     let message = ''

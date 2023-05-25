@@ -38,11 +38,11 @@ export type AlgorandValue = string | number | Buffer | Uint8Array
 export type AlgorandSymbol = string & Models.ChainSymbolBrand
 
 /** SignMethod enum contains the methods that can be used to sign a message */
-export enum SignMethod {
+export enum AlgorandSignMethod {
   Default = 'default'
 }
 
 /** An object containing the string message to sign */
-export type AlgoSignDataInput = {
+export type AlgorandSignDataInput = {
   stringToSign: string
 }
