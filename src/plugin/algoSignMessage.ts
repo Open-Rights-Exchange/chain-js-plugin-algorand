@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Interfaces, Models, Errors } from '@open-rights-exchange/chain-js'
-import {
-  AlgorandSignDataInput,
-  AlgorandPrivateKey,
-  AlgorandSignMethod,
-} from './models'
-import { sign } from "./algoCrypto"
+import { AlgorandSignDataInput, AlgorandPrivateKey, AlgorandSignMethod } from './models'
+import { sign } from './algoCrypto'
 
 export class AlgorandSignMessage implements Interfaces.SignMessage {
-  constructor(message: string, options?: Models.SignMessageOptions ) {
+  constructor(message: string, options?: Models.SignMessageOptions) {
     this.applyOptions(options)
     this.setSignMethod()
     this.applyMessage(message)
@@ -24,7 +20,7 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
   private _message: string
 
   private applyOptions(options: Models.SignMessageOptions) {
-    this._options = options ? options : { signMethod: AlgorandSignMethod.Default}
+    this._options = options || { signMethod: AlgorandSignMethod.Default }
   }
 
   private applyMessage(message: string) {
@@ -39,7 +35,7 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
   /** Date provided when the SignMessage class was created */
   get message(): AlgorandSignDataInput {
     return {
-      stringToSign: this._message
+      stringToSign: this._message,
     }
   }
 
@@ -66,8 +62,8 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
     }
     const isValid = this.validateAlgoSignInput(this.message).valid
     this._isValidated = isValid
-    return  {
-      valid: isValid
+    return {
+      valid: isValid,
     }
   }
 
@@ -80,30 +76,30 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
 
   private validateAlgoSignInput(data: AlgorandSignDataInput): Models.SignMessageValidateResult {
     let result: Models.SignMessageValidateResult
-  
+
     let message = ''
     let valid = true
-  
+
     // Check that the stringToSign property exists.
     if (!data || !data.stringToSign) {
       message += ' stringToSign property is missing.'
       valid = false
     }
-  
+
     // Check that message is string
     if (typeof data.stringToSign !== 'string') {
       message += ' stringToSign property must be a string.'
       valid = false
     }
-  
+
     /* If any part of the input is not valid then let's build an example to reply with */
     if (!valid) {
       const fullMessage = `The data supplied to personalSign is incorrectly formatted or missing: ${message}`
-  
+
       const example = {
         stringToSign: 'The message you would like to sign here',
       }
-  
+
       result = {
         valid,
         message: fullMessage,
@@ -116,10 +112,9 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
         example: {},
       }
     }
-  
+
     return result
   }
-  
 
   /** Sign the string or structured data */
   public async sign(privateKeys: AlgorandPrivateKey[]): Promise<Models.SignMessageResult> {
@@ -127,7 +122,7 @@ export class AlgorandSignMessage implements Interfaces.SignMessage {
     let result: Models.SignMessageResult
     try {
       const privateKey = privateKeys[0]
-      const signature = sign (this.message.stringToSign, privateKey)
+      const signature = sign(this.message.stringToSign, privateKey)
       result = {
         signature,
       }

@@ -39,7 +39,7 @@ export type AlgorandSymbol = string & Models.ChainSymbolBrand
 
 /** SignMethod enum contains the methods that can be used to sign a message */
 export enum AlgorandSignMethod {
-  Default = 'default'
+  Default = 'default',
 }
 
 /** An object containing the string message to sign */

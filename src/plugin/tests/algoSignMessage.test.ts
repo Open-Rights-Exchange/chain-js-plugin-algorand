@@ -1,5 +1,5 @@
 import { Models } from '@open-rights-exchange/chain-js'
-import { AlgorandSignMessage } from '../../plugin/algoSignMessage'
+import { AlgorandSignMessage } from '../algoSignMessage'
 import { toAlgorandPrivateKey } from '../helpers'
 import { AlgorandSignMethod } from '../models'
 
@@ -10,14 +10,12 @@ const privateKey = toAlgorandPrivateKey(privateKeyString)
 describe('Algorand SignMessage Tests', () => {
   it('Algorand sign - validate passes when input is correct', async () => {
     const stringToSign = 'Something to sign here'
-    const SignMessageOptions = { signMethod: AlgorandSignMethod.Default}
+    const SignMessageOptions = { signMethod: AlgorandSignMethod.Default }
     const SignMessage = new AlgorandSignMessage(stringToSign, SignMessageOptions)
     const validateResult = await SignMessage.validate()
     expect(validateResult.valid).toBeTruthy()
 
-    const result = await SignMessage.sign([
-      privateKey as unknown as Models.PrivateKeyBrand,
-    ])
+    const result = await SignMessage.sign([privateKey as unknown as Models.PrivateKeyBrand])
     expect(result.signature).toBeDefined()
   })
 
@@ -26,9 +24,7 @@ describe('Algorand SignMessage Tests', () => {
     const SignMessage = new AlgorandSignMessage(stringToSign)
     const validateResult = await SignMessage.validate()
     expect(validateResult.valid).toBeTruthy()
-    const result = await SignMessage.sign([
-      privateKey as unknown as Models.PrivateKeyBrand,
-    ])
+    const result = await SignMessage.sign([privateKey as unknown as Models.PrivateKeyBrand])
     expect(result.signature).toBeDefined()
   })
 })
