@@ -13,7 +13,7 @@ export const algoTestnetEndpoints: AlgorandChainEndpoint[] = [
       indexerUrl: algoPureStakeTestnetIndexer,
       headers: [
         {
-          'x-api-key': '7n0G2itKl885HQQzEfwtn4SSE1b6X3nb6zVnUw99',
+          'x-api-key': '3bk0oUJKr7aLJlcWnMOqu4OxLcXHaPpk5niyPGHR',
         },
       ],
     },
